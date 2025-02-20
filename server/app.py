@@ -13,6 +13,8 @@ from config import Config
 import os
 
 from send_email import send_verification_email
+import cloudinary
+import cloudinary.uploader
 
 # Initialize extensions globally
 db = SQLAlchemy(metadata=MetaData(naming_convention={
@@ -37,6 +39,12 @@ google_bp = make_google_blueprint(
     redirect_url="/google_callback"
 )
 app.register_blueprint(google_bp, url_prefix="/login")
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
+)
 
 with app.app_context():
     from models import User
@@ -136,12 +144,71 @@ class Logout(Resource):
             return {}, 204
         return {"Error": "401 Unauthorized"}, 401
     
+class ProfileUpload(Resource):
+    def post(self):
+        if "file" not in request.files:
+            return make_response({"error": "No file provided"}), 400
+
+        file = request.files["file"]
+        try:
+            upload_result = cloudinary.uploader.upload(
+                file,
+                folder="profile_pictures",
+                transformation={"width": 400, "height": 400, "crop": "fill", "gravity": "face"}
+            )
+            image_url = upload_result.get("secure_url")
+            user = User.query.filter_by(id=session['user_id']).first()
+            user.profile_picture = image_url
+            return make_response({"image_url": image_url}), 200
+        except Exception as e:
+            app.logger.error(e)
+            return make_response({"error": "Profile picture upload failed"}), 500
+
+class ImageUpload(Resource):
+    def post(self):
+        if "file" not in request.files:
+            return make_response({"error": "No file provided"}), 400
+
+        file = request.files["file"]
+        try:
+            upload_result = cloudinary.uploader.upload(
+                file,
+                folder="post_images",
+                transformation={"width": 800, "height": 600, "crop": "fill"}
+            )
+            image_url = upload_result.get("secure_url")
+            return make_response({"image_url": image_url}), 200
+        except Exception as e:
+            app.logger.error(e)
+            return make_response({"error": "Image upload failed"}), 500
+
+class VideoUpload(Resource):
+    def post(self):
+        if "file" not in request.files:
+            return make_response({"error": "No file provided"}), 400
+
+        file = request.files["file"]
+        try:
+            upload_result = cloudinary.uploader.upload(
+                file,
+                folder="post_videos",
+                resource_type="video"
+            )
+            video_url = upload_result.get("secure_url")
+            return make_response({"video_url": video_url}), 200
+        except Exception as e:
+            app.logger.error(e)
+            return make_response({"error": "Video upload failed"}), 500
+            
 api.add_resource(Signup, '/signup')
 api.add_resource(Verify, '/verify/<string:token>')
 api.add_resource(GoogleCallback, '/google_callback')
 api.add_resource(CheckSession, '/check_session')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
+api.add_resource(ProfileUpload, '/profile_upload')
+api.add_resource(ImageUpload, '/image_upload')
+api.add_resource(VideoUpload, '/video_upload')
 
 # print(app.url_map)
 if __name__ == '__main__':

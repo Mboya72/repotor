@@ -15,6 +15,7 @@ sendgrid = "*"
 python-dotenv = "*"
 flask-restful = "*"
 flask-dance = "*"
+cloudinary = "*"
 
 [dev-packages]
 
