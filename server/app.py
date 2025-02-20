@@ -47,7 +47,7 @@ cloudinary.config(
 )
 
 with app.app_context():
-    from models import User
+    from models import User, Record
 
 class Signup(Resource):
     def post(self):
@@ -159,6 +159,7 @@ class ProfileUpload(Resource):
             image_url = upload_result.get("secure_url")
             user = User.query.filter_by(id=session['user_id']).first()
             user.profile_picture = image_url
+            db.session.commit()
             return make_response({"image_url": image_url}), 200
         except Exception as e:
             app.logger.error(e)
@@ -199,7 +200,62 @@ class VideoUpload(Resource):
         except Exception as e:
             app.logger.error(e)
             return make_response({"error": "Video upload failed"}), 500
+        
+class Records(Resource):
+    def get(self):
+        all_records = Record.query.all()
+        if all_records:
+            return make_response([r.to_dict() for r in all_records], 200)
+        return make_response({"message": "No records available."}, 404)
+    
+    def post(self):
+        data = request.get_json()
+        
+        record = Record(
+            type = data.get('type'),
+            description = data.get('description'),
+            user_id = data.get('user_id'),
+            latitude = data.get('latitude'),
+            longitude = data.get('longitude'),
+            image_url = data.get('image_url'),
+            video_url = data.get('video_url')
+        )
+        
+        try:
+            db.session.add(record)
+            db.session.commit()
             
+            return make_response(record.to_dict(), 201)
+        except Exception:
+            return make_response({"Error": "Error making review."}, 422)
+
+class UserRecords(Resource):
+    def get(self, user_id):
+        user_records = Record.query.filter(Record.user_id==user_id).all()
+        if user_records:
+            return make_response([r.to_dict() for r in user_records], 200)
+        return {"Error": "User records not found"}, 404
+
+class RecordById(Resource):
+    def patch(self, id):
+        record = Record.query.filter_by(id=id).first()
+        for attr in request.json:
+            setattr(record, attr, request.json[attr])
+            
+        db.session.add(record)
+        db.session.commit()
+        
+        return make_response(
+            record.to_dict(),
+            200
+        )
+        
+    def delete(self, id):
+        record = Record.query.filter_by(id=id).first()
+        db.session.delete(record)
+        db.session.commit()
+        return make_response({"Message": "Successfully deleted record."}, 204)
+    
 api.add_resource(Signup, '/signup')
 api.add_resource(Verify, '/verify/<string:token>')
 api.add_resource(GoogleCallback, '/google_callback')
@@ -209,6 +265,9 @@ api.add_resource(Logout, '/logout')
 api.add_resource(ProfileUpload, '/profile_upload')
 api.add_resource(ImageUpload, '/image_upload')
 api.add_resource(VideoUpload, '/video_upload')
+api.add_resource(Records, '/records')
+api.add_resource(UserRecords, '/user_records/<int:id>')
+api.add_resource(RecordById, '/record/<int:id>')
 
 # print(app.url_map)
 if __name__ == '__main__':
