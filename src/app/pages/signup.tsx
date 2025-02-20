@@ -1,8 +1,13 @@
+"use client";
+
 import Head from "next/head";
 import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Signup() {
+  const [isAdmin, setIsAdmin] = useState(false);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <Head>
@@ -24,7 +29,7 @@ export default function Signup() {
             Sign up with Google
           </button>
 
-          <p className="mt-4 text-sm">SignUp with Credentials</p>
+          <p className="mt-4 text-sm">Sign Up with Credentials</p>
           <input
             type="text"
             placeholder="Username"
@@ -41,8 +46,22 @@ export default function Signup() {
             className="w-full mt-2 p-2 rounded bg-gray-700"
           />
 
+          {/* Admin Toggle */}
+          <div className="flex items-center mt-4">
+            <input
+              type="checkbox"
+              id="adminToggle"
+              className="mr-2 w-4 h-4"
+              checked={isAdmin}
+              onChange={() => setIsAdmin(!isAdmin)}
+            />
+            <label htmlFor="adminToggle" className="text-sm">
+              Sign up as Admin
+            </label>
+          </div>
+
           <button className="w-full mt-4 bg-orange-500 py-2 rounded-md">
-            Sign up
+            {isAdmin ? "Sign up as Admin" : "Sign up as User"}
           </button>
 
           <div className="flex justify-center mt-4">
