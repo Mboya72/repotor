@@ -47,7 +47,7 @@ cloudinary.config(
 )
 
 with app.app_context():
-    from models import User, Record
+    from models import User, Record, Like, Follow
 
 class Signup(Resource):
     def post(self):
@@ -256,6 +256,75 @@ class RecordById(Resource):
         db.session.commit()
         return make_response({"Message": "Successfully deleted record."}, 204)
     
+class LikeRecord(Resource):
+    def post(self, record_id):
+        data = request.get_json()
+        user = User.query.get_or_404(session.get('user_id'))
+        record = Record.query.get_or_404(record_id)
+        
+        # Check if the user already liked the record
+        existing_like = Like.query.filter_by(user_id=user.id, record_id=record.id).first()
+        if existing_like:
+            return make_response({"message": "You have already liked this record."}, 400)
+        
+        # Create a new like
+        like = Like(user_id=user.id, record_id=record.id)
+        db.session.add(like)
+        db.session.commit()
+        
+        return make_response(like.to_dict(), 201)
+
+class UnlikeRecord(Resource):
+    def post(self, record_id):
+        data = request.get_json()
+        user = User.query.get_or_404(session.get('user_id'))
+        record = Record.query.get_or_404(record_id)
+        
+        # Check if the user has liked the record
+        like = Like.query.filter_by(user_id=user.id, record_id=record.id).first()
+        if not like:
+            return make_response({"message": "You have not liked this record."}, 400)
+        
+        db.session.delete(like)
+        db.session.commit()
+        
+        return make_response({"message": "Like removed successfully."}, 200)
+    
+class FollowUser(Resource):
+    def post(self, followed_id):
+        data = request.get_json()
+        user = User.query.get_or_404(session.get('user_id'))
+        followed_user = User.query.get_or_404(followed_id)
+        
+        # Prevent the user from following themselves
+        if user.id == followed_user.id:
+            return make_response({"message": "You cannot follow yourself."}, 400)
+        
+        # Check if already following
+        existing_follow = Follow.query.filter_by(follower_id=user.id, followed_id=followed_user.id).first()
+        if existing_follow:
+            return make_response({"message": "You are already following this user."}, 400)
+        
+        follow = Follow(follower_id=user.id, followed_id=followed_user.id)
+        db.session.add(follow)
+        db.session.commit()
+        
+        return make_response(follow.to_dict(), 201)
+    
+class UnfollowUser(Resource):
+    def post(self, followed_id):
+        data = request.get_json()
+        user = User.query.get_or_404(session.get('user_id'))
+        followed_user = User.query.get_or_404(followed_id)
+        
+        follow = Follow.query.filter_by(follower_id=user.id, followed_id=followed_user.id).first()
+        if not follow:
+            return make_response({"message": "You are not following this user."}, 400)
+        
+        db.session.delete(follow)
+        db.session.commit()
+        
+        return make_response({"message": "Unfollowed successfully."}, 200)
 api.add_resource(Signup, '/signup')
 api.add_resource(Verify, '/verify/<string:token>')
 api.add_resource(GoogleCallback, '/google_callback')
@@ -268,7 +337,10 @@ api.add_resource(VideoUpload, '/video_upload')
 api.add_resource(Records, '/records')
 api.add_resource(UserRecords, '/user_records/<int:id>')
 api.add_resource(RecordById, '/record/<int:id>')
-
+api.add_resource(LikeRecord, '/like_record/<int:record_id>')
+api.add_resource(UnlikeRecord, 'unlike_record/<int:record_id>')
+api.add_resource(FollowUser, '/follow_user/<int:followed_id>')
+api.add_resource(UnfollowUser, '/unfollow_user/<int:followed_id>')
 # print(app.url_map)
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
