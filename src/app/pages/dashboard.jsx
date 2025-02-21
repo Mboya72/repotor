@@ -45,12 +45,28 @@ export default function Dashboard() {
         </button>
       </div>
       <div>
-        {tweets.map((tweet) => (
-          <div key={tweet.id} className="border p-2 mb-2 rounded">
-            <p className="font-bold">@{tweet.user}</p>
-            <p>{tweet.content}</p>
-          </div>
-        ))}
+        {tweets.length > 0 ? (
+          tweets.map((tweet) => (
+            <div key={tweet.id} className="border p-2 mb-2 rounded">
+              <p className="font-bold">@{tweet.user}</p>
+              <p>{tweet.content}</p>
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>Likes: {tweet.likes || 0}</span>
+                <span>Comments: {tweet.comments ? tweet.comments.length : 0}</span>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">No tweets available.</p>
+        )}
+      </div>
+      <div className="mt-6">
+        <h2 className="text-xl font-bold">Trending Topics</h2>
+        <ul className="list-disc pl-5 text-gray-700">
+          <li>#ReactJS</li>
+          <li>#NextJS</li>
+          <li>#WebDevelopment</li>
+        </ul>
       </div>
     </div>
   );
