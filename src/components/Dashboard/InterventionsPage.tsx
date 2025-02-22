@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 
-// Sample redflag posts data with images
-const sampleRedflagPosts = [
+// Sample intervention posts data with images
+const sampleInterventionPosts = [
   {
     id: 1,
-    title: "Post 1",
-    description: "Inappropriate content detected.",
-    status: "Under Investigation",
+    title: "Intervention 1",
+    description: "Imposing refers to the act of establishing authority or influence over others, often in a manner that is perceived as overbearing or unwelcome. It can involve the exertion of power or control that may not be readily accepted by those affected. This term can also imply a sense of burden placed upon individuals or groups.Imposing refers to the act of establishing authority or influence over others, often in a manner that is perceived as overbearing or unwelcome. It can involve the exertion of power or control that may not be readily accepted by those affected. This term can also imply a sense of burden placed upon individuals or groups.",
+    status: "Pending",
     ownerEmail: "user1@example.com",
     date: "2025-02-20",
     imageUrl:
@@ -15,63 +15,37 @@ const sampleRedflagPosts = [
   },
   {
     id: 2,
-    title: "Post 2",
-    description: "Spam content identified.",
-    status: "Under Investigation",
+    title: "Intervention 2",
+    description: "Action taken on violating content.",
+    status: "Resolved",
     ownerEmail: "user2@example.com",
     date: "2025-02-18",
     imageUrl: null, // No image for this post
   },
   {
     id: 3,
-    title: "Post 3",
-    description: "Offensive language used.",
-    status: "Under Investigation",
+    title: "Intervention 3",
+    description: "Spam content intervened with.",
+    status: "Pending",
     ownerEmail: "user3@example.com",
     date: "2025-02-17",
     imageUrl:
       "https://img.freepik.com/free-vector/new-year-s-eve-party-poster-ready-print_1361-1827.jpg?ga=GA1.1.135082535.1731343775&semt=ais_hybrid", // Sample image URL
   },
-  {
-    id: 4,
-    title: "Post 4",
-    description: "Hate speech detected.",
-    status: "Under Investigation",
-    ownerEmail: "user4@example.com",
-    date: "2025-02-16",
-    imageUrl: "https://via.placeholder.com/500", // Sample image URL
-  },
-  {
-    id: 5,
-    title: "Post 5",
-    description: "Violent content reported.",
-    status: "Under Investigation",
-    ownerEmail: "user5@example.com",
-    date: "2025-02-15",
-    imageUrl: "https://via.placeholder.com/500", // Sample image URL
-  },
-  {
-    id: 6,
-    title: "Post 6",
-    description: "Discriminatory language used.",
-    status: "Under Investigation",
-    ownerEmail: "user6@example.com",
-    date: "2025-02-14",
-    imageUrl: null, // No image for this post
-  },
+  // Add more posts for testing
 ];
 
-const RedflagsPage = () => {
-  const [redflagPosts, setRedflagPosts] = useState(sampleRedflagPosts);
+const InterventionsPage = () => {
+  const [interventionPosts, setInterventionPosts] = useState(sampleInterventionPosts);
   const [selectedImage, setSelectedImage] = useState<string | null>(null); // State for selected image
 
   // Function to handle status change and send email
   const handleStatusChange = (postId: number, newStatus: string, ownerEmail: string) => {
     // Update the post status
-    const updatedPosts = redflagPosts.map((post) =>
+    const updatedPosts = interventionPosts.map((post) =>
       post.id === postId ? { ...post, status: newStatus } : post
     );
-    setRedflagPosts(updatedPosts);
+    setInterventionPosts(updatedPosts);
 
     // Simulate sending an email (in real scenario, you'd call an API here)
     sendEmail(ownerEmail, newStatus);
@@ -80,8 +54,8 @@ const RedflagsPage = () => {
   // Simulate sending an email
   const sendEmail = (ownerEmail: string, status: string) => {
     console.log(`Sending email to ${ownerEmail}...`);
-    console.log(`Subject: Post status updated to ${status}`);
-    console.log(`Body: Your post status has been updated to ${status}.`);
+    console.log(`Subject: Intervention status updated to ${status}`);
+    console.log(`Body: Your intervention status has been updated to ${status}.`);
     // Here you can replace the console log with an actual email API call
   };
 
@@ -97,14 +71,14 @@ const RedflagsPage = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold text-white mb-4">Redflag Posts</h2>
+      <h2 className="text-2xl font-semibold text-white mb-4">Intervention Posts</h2>
 
-      {/* Display the redflag posts */}
-      {redflagPosts.length === 0 ? (
-        <p className="text-gray-400">No redflag posts found.</p>
+      {/* Display the intervention posts */}
+      {interventionPosts.length === 0 ? (
+        <p className="text-gray-400">No intervention posts found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {redflagPosts.map((post) => (
+          {interventionPosts.map((post) => (
             <div
               key={post.id}
               className="bg-gray-800 rounded-lg shadow-sm p-6 flex flex-col h-full"
@@ -132,19 +106,11 @@ const RedflagsPage = () => {
               <div className="mt-4 space-x-4">
                 <button
                   onClick={() =>
-                    handleStatusChange(post.id, "Under Investigation", post.ownerEmail)
+                    handleStatusChange(post.id, "Pending", post.ownerEmail)
                   }
                   className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
                 >
-                  Set to Under Investigation
-                </button>
-                <button
-                  onClick={() =>
-                    handleStatusChange(post.id, "Rejected", post.ownerEmail)
-                  }
-                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm"
-                >
-                  Set to Rejected
+                  Set to Pending
                 </button>
                 <button
                   onClick={() =>
@@ -153,6 +119,14 @@ const RedflagsPage = () => {
                   className="bg-green-600 text-white px-4 py-2 rounded-md text-sm"
                 >
                   Set to Resolved
+                </button>
+                <button
+                  onClick={() =>
+                    handleStatusChange(post.id, "Rejected", post.ownerEmail)
+                  }
+                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm"
+                >
+                  Set to Rejected
                 </button>
               </div>
             </div>
@@ -182,4 +156,4 @@ const RedflagsPage = () => {
   );
 };
 
-export default RedflagsPage;
+export default InterventionsPage;
