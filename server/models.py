@@ -115,3 +115,9 @@ class Follow(db.Model):
             "followed_id": self.followed_id,
             "created_at": self.created_at.isoformat(),  # corrected
         }
+
+# class Comment(db.Model):
+#     __tablename__ = 'comments'
+    
+#     id = db.Column(db.Integer, primary_key=True)
+    

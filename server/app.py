@@ -325,6 +325,13 @@ class UnfollowUser(Resource):
         db.session.commit()
         
         return make_response({"message": "Unfollowed successfully."}, 200)
+    
+class Users(Resource):
+    def get(self):
+        users = User.query.all()
+        if users:
+            return make_response([u.to_dict() for u in users], 200)
+        return make_response({"Error": "No users"}, 404)
 api.add_resource(Signup, '/signup')
 api.add_resource(Verify, '/verify/<string:token>')
 api.add_resource(GoogleCallback, '/google_callback')
@@ -341,6 +348,7 @@ api.add_resource(LikeRecord, '/like_record/<int:record_id>')
 api.add_resource(UnlikeRecord, 'unlike_record/<int:record_id>')
 api.add_resource(FollowUser, '/follow_user/<int:followed_id>')
 api.add_resource(UnfollowUser, '/unfollow_user/<int:followed_id>')
+api.add_resource(Users, '/users')
 # print(app.url_map)
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
