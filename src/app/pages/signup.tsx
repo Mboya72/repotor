@@ -15,8 +15,8 @@ export default function Signup() {
       </Head>
       <div className="flex w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg p-8">
         {/* Left Side (Logo) */}
-        <div className="w-1/2 flex justify-center items-center">
-          <div className="text-orange-500 text-9xl font-bold">R</div>
+        <div className="w-1/2 flex justify-center items-center flex-grow">
+          <div className="text-orange-500 text-[12rem] font-bold">R</div>
         </div>
 
         {/* Right Side (Form) */}
