@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Signup from "./pages/signup";
+import Signup from "./signup/page.js";
+import Signin from "./signin/page.js"
 
 export default function Home() {
   return (
