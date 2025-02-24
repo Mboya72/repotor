@@ -1,8 +1,10 @@
-import LeftBar from "@/components/MainPage/LeftBar";
-import "./globals.css";
+
 import RightBar from "@/components/MainPage/RightBar";
+import "./globals.css";
+
 
 import type { Metadata } from 'next'
+import LeftBar from "@/components/MainPage/LeftBar";
 
 export const metadata: Metadata = {
   title: 'Repotor-test',

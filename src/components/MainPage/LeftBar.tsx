@@ -74,17 +74,21 @@ const LeftBar = () => {
                 width={24}
                 height={24}
               />
-              <span className="hidden xxl:inline ">{item.name}</span>
+              <span className="xxl:inline-block hidden">{item.name}</span> {/* Text shown in larger screens */}
             </Link>
           ))}
         </div>
+        
         {/* BUTTON */}
+        {/* For smaller screens: visible, for larger screens: hidden */}
         <Link
           href="/compose/post"
-          className="bg-white text-black rounded-full w-12 h-12 flex items-center justify-center xxl:hidden"
+          className="xxl:hidden block bg-white text-black rounded-full w-12 h-12 flex items-center justify-center"
         >
           <Image src="/icons/post.svg" alt="new post" width={24} height={24} />
         </Link>
+
+        {/* Visible for larger screens only */}
         <Link
           href="/compose/post"
           className="hidden xxl:block bg-orange-600 text-black rounded-full font-bold py-2 px-20"
@@ -92,6 +96,7 @@ const LeftBar = () => {
           Post
         </Link>
       </div>
+
       {/* USER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
