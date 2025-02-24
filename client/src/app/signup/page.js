@@ -23,9 +23,24 @@ export default function Signup() {
     console.log("User Data:", formData, "Admin:", isAdmin);
 
     // Simulate successful signup (Replace this with API call)
-    setTimeout(() => {
-      router.push("/signin"); // Redirect to sign-in page
-    }, 1000);
+    // setTimeout(() => {
+    //   router.push("/signin"); // Redirect to sign-in page
+    // }, 1000);
+
+    fetch("http://localhost:5000/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log("Posted User data:", data)
+        
+      })
+      .catch((err) => console.error(err))
   };
 
   return (

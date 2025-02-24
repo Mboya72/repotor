@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import create_access_token, decode_token
+from flask_jwt_extended import JWTManager, create_access_token, decode_token
 from flask_dance.contrib.google import make_google_blueprint, google
 from sqlalchemy import MetaData
 from config import Config
@@ -45,6 +45,7 @@ cloudinary.config(
     api_key=os.getenv("CLOUDINARY_API_KEY"),
     api_secret=os.getenv("CLOUDINARY_API_SECRET")
 )
+jwt = JWTManager(app)
 
 with app.app_context():
     from models import User, Record, Like, Follow
@@ -64,9 +65,11 @@ class Signup(Resource):
             db.session.add(user)
             db.session.commit()
             
-            token = create_access_token(identity=user.email, expires_delta=timedelta(hours=24))
-            if not send_verification_email(user.email, token):
-                return make_response({"Error": "Failed to send verification email"}, 500)
+            # token = create_access_token(identity=user.email, expires_delta=timedelta(hours=24))
+            # status = send_verification_email(user.email, token)
+            # print("Status == 202?", status)
+            # if not status:
+            #     return make_response({"Error": "Failed to send verification email"}, 500)
             
             session['user_id'] = user.id
             print(session)
@@ -345,7 +348,7 @@ api.add_resource(Records, '/records')
 api.add_resource(UserRecords, '/user_records/<int:id>')
 api.add_resource(RecordById, '/record/<int:id>')
 api.add_resource(LikeRecord, '/like_record/<int:record_id>')
-api.add_resource(UnlikeRecord, 'unlike_record/<int:record_id>')
+api.add_resource(UnlikeRecord, '/unlike_record/<int:record_id>')
 api.add_resource(FollowUser, '/follow_user/<int:followed_id>')
 api.add_resource(UnfollowUser, '/unfollow_user/<int:followed_id>')
 api.add_resource(Users, '/users')
