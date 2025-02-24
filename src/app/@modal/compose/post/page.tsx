@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "@/components/Image";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const PostModal = () => {
@@ -24,11 +24,11 @@ const PostModal = () => {
         <div className="py-8 flex gap-4">
           <div className="relative w-10 h-10 rounded-full overflow-hidden">
             <Image
-              path="general/avatar.png"
+              src="/general/avatar.png" // Corrected to 'src'
               alt="Lama Dev"
-              w={100}
-              h={100}
-              tr={true}
+              width={100} // Corrected to 'width'
+              height={100} // Corrected to 'height'
+              unoptimized={true} // Optional to disable optimization if needed
             />
           </div>
           <input
@@ -41,45 +41,45 @@ const PostModal = () => {
         <div className=" flex items-center justify-between gap-4 flex-wrap border-t border-borderGray pt-4">
           <div className="flex gap-4 flex-wrap">
             <Image
-              path="icons/image.svg"
+              src="/icons/image.svg" // Corrected to 'src'
               alt=""
-              w={20}
-              h={20}
+              width={20} // Corrected to 'width'
+              height={20} // Corrected to 'height'
               className="cursor-pointer"
             />
             <Image
-              path="icons/gif.svg"
+              src="/icons/gif.svg" // Corrected to 'src'
               alt=""
-              w={20}
-              h={20}
+              width={20}
+              height={20}
               className="cursor-pointer"
             />
             <Image
-              path="icons/poll.svg"
+              src="/icons/poll.svg" // Corrected to 'src'
               alt=""
-              w={20}
-              h={20}
+              width={20}
+              height={20}
               className="cursor-pointer"
             />
             <Image
-              path="icons/emoji.svg"
+              src="/icons/emoji.svg" // Corrected to 'src'
               alt=""
-              w={20}
-              h={20}
+              width={20}
+              height={20}
               className="cursor-pointer"
             />
             <Image
-              path="icons/schedule.svg"
+              src="/icons/schedule.svg" // Corrected to 'src'
               alt=""
-              w={20}
-              h={20}
+              width={20}
+              height={20}
               className="cursor-pointer"
             />
             <Image
-              path="icons/location.svg"
+              src="/icons/location.svg" // Corrected to 'src'
               alt=""
-              w={20}
-              h={20}
+              width={20}
+              height={20}
               className="cursor-pointer"
             />
           </div>
