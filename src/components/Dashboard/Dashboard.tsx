@@ -102,7 +102,7 @@ const Dashboard = () => {
                   className={`w-full flex items-center px-4 py-2.5 text-sm
                     ${
                       activeItem === item.name
-                        ? "bg-gray-700 text-white"
+                        ? "bg-[#FB6535] text-gray-800"
                         : "text-gray-300 hover:bg-gray-700"
                     }`}
                 >
