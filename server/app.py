@@ -167,6 +167,7 @@ class Login(Resource):
         user = User.query.filter(User.email==data.get('email')).first()
         if user and user.authenticate(data.get('password')):
             session['user_id'] = user.id
+            print(session)
             return user.to_dict(), 200    
         return {"Error": "401 Unauthorized"}, 401
 
