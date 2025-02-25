@@ -96,35 +96,6 @@ class Verify(Resource):
             print("Verification error:", e)
             return make_response({"Error": "Verification failed"}, 400)
 
-# class GoogleCallback(Resource):
-#     def get(self):
-#         # If not authorized, redirect to the Google login page
-#         if not google.authorized:
-#             return redirect(url_for("google.login"))
-        
-#         resp = google.get("/oauth2/v2/userinfo")
-#         if not resp.ok:
-#             return make_response({"Error": "Failed to fetch user info from Google"}, 400)
-        
-#         user_info = resp.json()
-#         email = user_info.get("email")
-#         name = user_info.get("name")
-#         profile_picture = user_info.get("picture")
-        
-#         # Check if the user already exists
-#         user = User.query.filter_by(email=email).first()
-#         if not user:
-#             # Create new user with Google info and mark as verified
-#             user = User(username=name, email=email, profile_picture=profile_picture)
-#             # For Google signup, you might not need a password; set a dummy value if required
-#             user.password_hash = "google_oauth_dummy"
-#             user.is_verified = True
-#             db.session.add(user)
-#             db.session.commit()
-        
-#         session["user_id"] = user.id
-#         token = create_access_token(identity=user.email)
-#         return make_response({"token": token, "message": "Logged in with Google"}, 200)
 
 @app.route("/post_google_auth")
 def post_google_auth():
