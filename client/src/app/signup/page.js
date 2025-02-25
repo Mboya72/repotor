@@ -1,16 +1,15 @@
-"use client";
-
+'use client';
 import Head from "next/head";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
+    is_admin: false,  
   });
   const router = useRouter();
 
@@ -20,27 +19,24 @@ export default function Signup() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log("User Data:", formData, "Admin:", isAdmin);
-
-    // Simulate successful signup (Replace this with API call)
-    // setTimeout(() => {
-    //   router.push("/signin"); // Redirect to sign-in page
-    // }, 1000);
+    console.log("User Data:", formData);
 
     fetch("http://localhost:5000/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify(formData),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
-        console.log("Posted User data:", data)
-        
+        console.log("Posted User data:", data);
+        // Optionally redirect or perform further actions here.
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.error(err));
+  };
+
+  const handleGoogleSignup = () => {
+    window.location.href = "http://localhost:5000/login/google";
   };
 
   return (
@@ -60,7 +56,10 @@ export default function Signup() {
           <p className="text-orange-400">Join Now.</p>
 
           {/* Google Signup */}
-          <button className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300">
+          <button
+            className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300"
+            onClick={handleGoogleSignup}
+          >
             <FaGoogle className="text-orange-500" />
             Sign up with Google
           </button>
@@ -98,8 +97,10 @@ export default function Signup() {
                 type="checkbox"
                 id="adminToggle"
                 className="mr-2 w-4 h-4"
-                checked={isAdmin}
-                onChange={() => setIsAdmin(!isAdmin)}
+                checked={formData.is_admin}
+                onChange={(e) =>
+                  setFormData({ ...formData, is_admin: e.target.checked })
+                }
               />
               <label htmlFor="adminToggle" className="text-sm">
                 Sign up as Admin
@@ -110,7 +111,7 @@ export default function Signup() {
               type="submit"
               className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600"
             >
-              {isAdmin ? "Sign up as Admin" : "Sign up as User"}
+              {formData.is_admin ? "Sign up as Admin" : "Sign up as User"}
             </button>
           </form>
 
@@ -128,8 +129,14 @@ export default function Signup() {
 
           <p className="mt-4 text-xs text-gray-400">
             By signing up, you agree to the{" "}
-            <span className="text-orange-400 hover:underline">Terms of Service</span> and{" "}
-            <span className="text-orange-400 hover:underline">Privacy Policy</span>, including{" "}
+            <span className="text-orange-400 hover:underline">
+              Terms of Service
+            </span>{" "}
+            and{" "}
+            <span className="text-orange-400 hover:underline">
+              Privacy Policy
+            </span>
+            , including{" "}
             <span className="text-orange-400 hover:underline">cookie use</span>.
           </p>
         </div>

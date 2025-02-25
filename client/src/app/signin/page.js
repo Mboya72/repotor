@@ -20,12 +20,31 @@ export default function Signin() {
     console.log("Sign in Data:", formData);
 
     // Simulate sign-in (Replace this with an actual API call)
-    if (formData.email === "test@example.com" && formData.password === "password") {
-      router.push("/dashboard"); // Redirect to home/dashboard after successful login
-    } else {
-      setError("Invalid email or password. Please try again.");
-    }
+    // if (formData.email === "test@example.com" && formData.password === "password") {
+    //   router.push("/dashboard"); // Redirect to home/dashboard after successful login
+    // } else {
+    //   setError("Invalid email or password. Please try again.");
+    // }
+
+    fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    })
+      .then(r => r.json())
+      .then((data) => {
+        console.log(data)
+        // push to homepage
+      })
+      .catch(err => console.error(err))
   };
+
+  const handleGoogleSignin = () => {
+    window.location.href = "http://localhost:5000/login/google";
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
@@ -44,7 +63,7 @@ export default function Signin() {
           <p className="text-orange-400">Sign in to your account.</p>
 
           {/* Google Signin */}
-          <button className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300">
+          <button onClick={handleGoogleSignin} className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300">
             <FaGoogle className="text-orange-500" />
             Sign in with Google
           </button>
