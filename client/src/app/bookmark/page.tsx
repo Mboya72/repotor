@@ -1,45 +1,85 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Bookmark, Trash2 } from "lucide-react";
+"use client";
 
-// Define the Bookmark type
-interface BookmarkType {
+import { useState } from "react";
+import { Bookmark, BookmarkCheck, Trash2 } from "lucide-react";
+
+interface Post {
   id: number;
   title: string;
-  reporter: string;
+  author: string;
 }
 
-export default function BookmarkPage() {
-  const [bookmarks, setBookmarks] = useState<BookmarkType[]>([
-    { id: 1, title: "Corruption Scandal Exposed", reporter: "@investigator1" },
-    { id: 2, title: "New Environmental Laws Introduced", reporter: "@eco_warrior" },
-    { id: 3, title: "Community Rallies for Justice", reporter: "@activist" }
-  ]);
+// Sample posts data (this can come from an API)
+const posts: Post[] = [
+  { id: 1, title: "Understanding Next.js Middleware", author: "@dev_guru" },
+  { id: 2, title: "10 Tips for Writing Clean Code", author: "@coder_tips" },
+  { id: 3, title: "Why TypeScript is the Future", author: "@tech_savvy" },
+];
 
-  const removeBookmark = (id: number): void => {
-    setBookmarks((prevBookmarks) => prevBookmarks.filter((bookmark) => bookmark.id !== id));
+export default function BookmarkPage() {
+  const [bookmarks, setBookmarks] = useState<Post[]>([]);
+
+  const toggleBookmark = (post: Post) => {
+    if (bookmarks.some((b) => b.id === post.id)) {
+      setBookmarks((prev) => prev.filter((b) => b.id !== post.id));
+    } else {
+      setBookmarks((prev) => [...prev, post]);
+    }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 flex items-center gap-2">
-        <Bookmark className="w-6 h-6" /> iReporter Bookmarks
-      </h1>
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">Posts</h1>
+
+      {/* List of Posts */}
+      <div className="space-y-4">
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="flex justify-between items-center bg-gray-800 text-white p-4 rounded-lg shadow-md"
+          >
+            <div>
+              <h2 className="text-lg font-semibold">{post.title}</h2>
+              <p className="text-sm text-gray-400">By {post.author}</p>
+            </div>
+            <button
+              onClick={() => toggleBookmark(post)}
+              className="text-yellow-400 hover:text-yellow-300"
+            >
+              {bookmarks.some((b) => b.id === post.id) ? (
+                <BookmarkCheck className="w-6 h-6" />
+              ) : (
+                <Bookmark className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Bookmarked Posts */}
+      <h2 className="text-2xl font-bold mt-8">Bookmarked Posts</h2>
       {bookmarks.length === 0 ? (
-        <p className="text-gray-500">No bookmarks yet.</p>
+        <p className="text-gray-500 mt-2">No bookmarks yet.</p>
       ) : (
-        bookmarks.map((bookmark) => (
-          <Card key={bookmark.id} className="mb-3 shadow-md p-3 flex justify-between items-center">
-            <CardContent>
-              <p className="text-gray-900 font-medium">{bookmark.title}</p>
-              <p className="text-gray-500 text-sm">Reported by {bookmark.reporter}</p>
-            </CardContent>
-            <Button variant="ghost" onClick={() => removeBookmark(bookmark.id)}>
-              <Trash2 className="w-5 h-5 text-red-500" />
-            </Button>
-          </Card>
-        ))
+        <div className="space-y-4 mt-4">
+          {bookmarks.map((bookmark) => (
+            <div
+              key={bookmark.id}
+              className="flex justify-between items-center bg-gray-700 text-white p-4 rounded-lg shadow-md"
+            >
+              <div>
+                <h3 className="text-lg font-semibold">{bookmark.title}</h3>
+                <p className="text-sm text-gray-400">By {bookmark.author}</p>
+              </div>
+              <button
+                onClick={() => toggleBookmark(bookmark)}
+                className="text-red-500 hover:text-red-400"
+              >
+                <Trash2 className="w-6 h-6" />
+              </button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
