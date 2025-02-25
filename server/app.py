@@ -27,7 +27,7 @@ app.config.from_object(Config)
 bcrypt = Bcrypt(app)
 
 migrate = Migrate(app, db)
-cors = CORS(app, supports_credentials=True)
+cors = CORS(app, supports_credentials=True, origins=["http://localhost:3000", "https://accounts.google.com"])
 api = Api(app)
 
 db.init_app(app)
@@ -35,8 +35,8 @@ db.init_app(app)
 google_bp = make_google_blueprint(
     client_id=os.getenv("GOOGLE_CLIENT_ID"),
     client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
-    scope=["profile", "email"],
-    redirect_url="/google_callback"
+    scope=["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"],
+    redirect_url="/post_google_auth"
 )
 app.register_blueprint(google_bp, url_prefix="/login")
 
@@ -94,35 +94,65 @@ class Verify(Resource):
             print("Verification error:", e)
             return make_response({"Error": "Verification failed"}, 400)
 
-class GoogleCallback(Resource):
-    def get(self):
-        # If not authorized, redirect to the Google login page
-        if not google.authorized:
-            return redirect(url_for("google.login"))
+# class GoogleCallback(Resource):
+#     def get(self):
+#         # If not authorized, redirect to the Google login page
+#         if not google.authorized:
+#             return redirect(url_for("google.login"))
         
-        resp = google.get("/oauth2/v2/userinfo")
-        if not resp.ok:
-            return make_response({"Error": "Failed to fetch user info from Google"}, 400)
+#         resp = google.get("/oauth2/v2/userinfo")
+#         if not resp.ok:
+#             return make_response({"Error": "Failed to fetch user info from Google"}, 400)
         
-        user_info = resp.json()
-        email = user_info.get("email")
-        name = user_info.get("name")
-        profile_picture = user_info.get("picture")
+#         user_info = resp.json()
+#         email = user_info.get("email")
+#         name = user_info.get("name")
+#         profile_picture = user_info.get("picture")
         
-        # Check if the user already exists
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            # Create new user with Google info and mark as verified
-            user = User(username=name, email=email, profile_picture=profile_picture)
-            # For Google signup, you might not need a password; set a dummy value if required
-            user.password_hash = "google_oauth_dummy"
-            user.is_verified = True
-            db.session.add(user)
-            db.session.commit()
+#         # Check if the user already exists
+#         user = User.query.filter_by(email=email).first()
+#         if not user:
+#             # Create new user with Google info and mark as verified
+#             user = User(username=name, email=email, profile_picture=profile_picture)
+#             # For Google signup, you might not need a password; set a dummy value if required
+#             user.password_hash = "google_oauth_dummy"
+#             user.is_verified = True
+#             db.session.add(user)
+#             db.session.commit()
         
-        session["user_id"] = user.id
-        token = create_access_token(identity=user.email)
-        return make_response({"token": token, "message": "Logged in with Google"}, 200)
+#         session["user_id"] = user.id
+#         token = create_access_token(identity=user.email)
+#         return make_response({"token": token, "message": "Logged in with Google"}, 200)
+
+@app.route("/post_google_auth")
+def post_google_auth():
+    # If not authorized, force a login.
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    
+    # Fetch user info from Google.
+    resp = google.get("/oauth2/v2/userinfo")
+    if not resp.ok:
+        return make_response({"Error": "Failed to fetch user info from Google"}, 400)
+    
+    user_info = resp.json()
+    email = user_info.get("email")
+    name = user_info.get("name")
+    profile_picture = user_info.get("picture")
+    
+    # Check if the user already exists.
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        user = User(username=name, email=email, profile_picture=profile_picture)
+        user.password_hash = "google_oauth_dummy"  # Dummy value since password isn't used.
+        user.is_verified = True
+        db.session.add(user)
+        db.session.commit()
+    
+    session["user_id"] = user.id
+    token = create_access_token(identity=user.email)
+    # Redirect to your frontend, passing the token as a query parameter (or handle as desired).
+    return redirect(f"http://localhost:3000?token={token}")
 
 class CheckSession(Resource):
     def get(self):
@@ -337,7 +367,7 @@ class Users(Resource):
         return make_response({"Error": "No users"}, 404)
 api.add_resource(Signup, '/signup')
 api.add_resource(Verify, '/verify/<string:token>')
-api.add_resource(GoogleCallback, '/google_callback')
+# api.add_resource(GoogleCallback, '/google_callback')
 api.add_resource(CheckSession, '/check_session')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
