@@ -3,12 +3,18 @@ from sendgrid.helpers.mail import Mail
 from flask import current_app
 
 def send_verification_email(email, token):
-    url = f"{current_app.config['FRONTEND_URL']}/verify/{token}"
+    url = f"http://localhost:5000/verify/{token}"
     message = Mail(
-        from_email="noreply@ireporter.com",
+        from_email="noreply.ireporterorg@gmail.com",
         to_emails=email,
         subject="Verify Your Account",
-        html_content=f"<p>Please click <a href='{url}'>here</a> to verify your account.</p>"
+        html_content=f"""
+              <html>
+                <body>
+                  <p>Please click <a href="{url}">here</a> to verify your account.</p>
+                </body>
+              </html>
+            """
     )
     
     try:

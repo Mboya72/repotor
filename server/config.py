@@ -10,3 +10,5 @@ class Config:
     SESSION_COOKIE_SAMESITE = os.getenv("SESSION_COOKIE_SAMESITE", "None")
     SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", "True") == "True"
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "fallback_jwt_secret")
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+    FRONTEND_URL = os.getenv("FRONTEND_URL")

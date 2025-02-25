@@ -57,7 +57,8 @@ class Signup(Resource):
         print("Received data: ", data)
         user = User(
             username=data.get('username'), 
-            email=data.get('email')
+            email=data.get('email'),
+            is_admin=data.get('is_admin')
         )
         user.password_hash = data.get('password')
         
@@ -65,17 +66,17 @@ class Signup(Resource):
             db.session.add(user)
             db.session.commit()
             
-            # token = create_access_token(identity=user.email, expires_delta=timedelta(hours=24))
-            # status = send_verification_email(user.email, token)
-            # print("Status == 202?", status)
-            # if not status:
-            #     return make_response({"Error": "Failed to send verification email"}, 500)
+            token = create_access_token(identity=user.email, expires_delta=timedelta(hours=24))
+            status = send_verification_email(user.email, token)
+            print("Status == 202?", status)
+            if not status:
+                return make_response({"Error": "Failed to send verification email"}, 500)
             
             session['user_id'] = user.id
             print(session)
             return make_response(user.to_dict(), 201)
-        except Exception:
-            return make_response({"Error": "Error signing up. Check credentials."}, 422)
+        except Exception as e:
+            return make_response({f"Error": "Error signing up. Check credentials.", "e": {e}}, 422)
 
 class Verify(Resource):
     def get(self, token):
