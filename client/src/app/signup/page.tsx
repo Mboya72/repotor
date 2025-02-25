@@ -70,7 +70,7 @@ export default function Signup() {
               type="text"
               name="username"
               placeholder="Username"
-              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full mt-2 p-3 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
             />
@@ -78,7 +78,7 @@ export default function Signup() {
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full mt-2 p-3 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
             />
@@ -86,7 +86,7 @@ export default function Signup() {
               type="password"
               name="password"
               placeholder="Password"
-              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full mt-2 p-3 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
             />
@@ -94,7 +94,7 @@ export default function Signup() {
               type="password"
               name="confirmPassword"
               placeholder="Confirm Password"
-              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full mt-2 p-3 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
             />

@@ -60,7 +60,7 @@ export default function Signin() {
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full mt-2 p-3 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
             />
@@ -68,7 +68,7 @@ export default function Signin() {
               type="password"
               name="password"
               placeholder="Password"
-              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full mt-2 p-3 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
             />
@@ -78,7 +78,7 @@ export default function Signin() {
 
             {/* Forgot Password */}
             <div className="text-right mt-2">
-              <Link href="/forgot-password" className="text-sm text-orange-400 hover:underline">
+              <Link href="/ForgotPassword" className="text-sm text-orange-400 hover:underline">
                 Forgot Password?
               </Link>
             </div>
