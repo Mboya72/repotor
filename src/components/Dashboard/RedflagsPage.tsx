@@ -129,12 +129,12 @@ const RedflagsPage = () => {
               )}
 
               {/* Action buttons for changing status */}
-              <div className="mt-4 space-x-4">
+              <div className="mt-4 flex flex-wrap gap-4 justify-between">
                 <button
                   onClick={() =>
                     handleStatusChange(post.id, "Under Investigation", post.ownerEmail)
                   }
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm w-full sm:w-auto"
                 >
                   Set to Under Investigation
                 </button>
@@ -142,7 +142,7 @@ const RedflagsPage = () => {
                   onClick={() =>
                     handleStatusChange(post.id, "Rejected", post.ownerEmail)
                   }
-                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm"
+                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm w-full sm:w-auto"
                 >
                   Set to Rejected
                 </button>
@@ -150,7 +150,7 @@ const RedflagsPage = () => {
                   onClick={() =>
                     handleStatusChange(post.id, "Resolved", post.ownerEmail)
                   }
-                  className="bg-green-600 text-white px-4 py-2 rounded-md text-sm"
+                  className="bg-green-600 text-white px-4 py-2 rounded-md text-sm w-full sm:w-auto"
                 >
                   Set to Resolved
                 </button>
