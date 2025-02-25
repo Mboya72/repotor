@@ -70,89 +70,90 @@ const InterventionsPage = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-semibold text-white mb-4">Intervention Posts</h2>
+<div className="p-6">
+  <h2 className="text-2xl font-semibold text-white mb-4">Intervention Posts</h2>
 
-      {/* Display the intervention posts */}
-      {interventionPosts.length === 0 ? (
-        <p className="text-gray-400">No intervention posts found.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {interventionPosts.map((post) => (
+  {/* Display the intervention posts */}
+  {interventionPosts.length === 0 ? (
+    <p className="text-gray-400">No intervention posts found.</p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {interventionPosts.map((post) => (
+        <div
+          key={post.id}
+          className="bg-gray-800 rounded-lg shadow-sm p-6 flex flex-col h-full"
+        >
+          <h3 className="text-xl font-medium text-white">{post.title}</h3>
+          <p className="text-sm text-gray-400 mt-2">{post.description}</p>
+          <p className="text-xs text-gray-500 mt-2">Posted on: {post.date}</p>
+          <p className="text-sm text-yellow-400 mt-2">Status: {post.status}</p>
+
+          {/* Display image if available */}
+          {post.imageUrl && (
             <div
-              key={post.id}
-              className="bg-gray-800 rounded-lg shadow-sm p-6 flex flex-col h-full"
+              className="mt-4 cursor-pointer w-full h-48 bg-gray-700 rounded-md overflow-hidden"
+              onClick={() => handleImageClick(post.imageUrl)}
             >
-              <h3 className="text-xl font-medium text-white">{post.title}</h3>
-              <p className="text-sm text-gray-400 mt-2">{post.description}</p>
-              <p className="text-xs text-gray-500 mt-2">Posted on: {post.date}</p>
-              <p className="text-sm text-yellow-400 mt-2">Status: {post.status}</p>
-
-              {/* Display image if available */}
-              {post.imageUrl && (
-                <div
-                  className="mt-4 cursor-pointer w-full h-48 bg-gray-700 rounded-md overflow-hidden"
-                  onClick={() => handleImageClick(post.imageUrl)}
-                >
-                  <img
-                    src={post.imageUrl}
-                    alt="Post Image"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-
-              {/* Action buttons for changing status */}
-              <div className="mt-4 space-x-4">
-                <button
-                  onClick={() =>
-                    handleStatusChange(post.id, "Pending", post.ownerEmail)
-                  }
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
-                >
-                  Set to Pending
-                </button>
-                <button
-                  onClick={() =>
-                    handleStatusChange(post.id, "Resolved", post.ownerEmail)
-                  }
-                  className="bg-green-600 text-white px-4 py-2 rounded-md text-sm"
-                >
-                  Set to Resolved
-                </button>
-                <button
-                  onClick={() =>
-                    handleStatusChange(post.id, "Rejected", post.ownerEmail)
-                  }
-                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm"
-                >
-                  Set to Rejected
-                </button>
-              </div>
+              <img
+                src={post.imageUrl}
+                alt="Post Image"
+                className="w-full h-full object-cover"
+              />
             </div>
-          ))}
-        </div>
-      )}
+          )}
 
-      {/* Image Popup Modal */}
-      {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-          <div className="relative">
+          {/* Action buttons for changing status */}
+          <div className="mt-4 flex flex-wrap gap-4 justify-between">
             <button
-              onClick={closePopup}
-              className="absolute top-0 right-0 text-white text-2xl p-2"
+              onClick={() =>
+                handleStatusChange(post.id, "Pending", post.ownerEmail)
+              }
+              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center"
             >
-              ×
+              Set to Pending
             </button>
-            <img
-              src={selectedImage}
-              alt="Full view"
-              className="max-w-full max-h-full object-contain"
-            />
+            <button
+              onClick={() =>
+                handleStatusChange(post.id, "Resolved", post.ownerEmail)
+              }
+              className="bg-green-600 text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center"
+            >
+              Set to Resolved
+            </button>
+            <button
+              onClick={() =>
+                handleStatusChange(post.id, "Rejected", post.ownerEmail)
+              }
+              className="bg-red-600 text-white px-2 py-2 rounded-md text-sm  flex items-center justify-center"
+            >
+              Set to Rejected
+            </button>
           </div>
         </div>
-      )}
+      ))}
     </div>
+  )}
+
+  {/* Image Popup Modal */}
+  {selectedImage && (
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+      <div className="relative">
+        <button
+          onClick={closePopup}
+          className="absolute top-0 right-0 text-white text-2xl p-2"
+        >
+          ×
+        </button>
+        <img
+          src={selectedImage}
+          alt="Full view"
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
+    </div>
+  )}
+</div>
+
   );
 };
 

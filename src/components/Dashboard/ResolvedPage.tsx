@@ -113,12 +113,12 @@ const ResolvedPage = () => {
               )}
 
               {/* Action buttons for changing status */}
-              <div className="mt-4 space-x-4">
+              <div className="mt-4 flex flex-wrap gap-4 justify-between">
                 <button
                   onClick={() =>
                     handleStatusChange(post.id, "Under Investigation", post.ownerEmail)
                   }
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center"
                 >
                   Set to Under Investigation
                 </button>
@@ -126,7 +126,7 @@ const ResolvedPage = () => {
                   onClick={() =>
                     handleStatusChange(post.id, "Rejected", post.ownerEmail)
                   }
-                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm"
+                  className="bg-red-600 text-white px-4 py-2 rounded-md text-sm  flex items-center justify-center"
                 >
                   Set to Rejected
                 </button>

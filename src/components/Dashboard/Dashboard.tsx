@@ -86,7 +86,7 @@ const Dashboard = () => {
         className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
           ${isMobile ? "fixed" : "relative"}
           w-64 h-full bg-gray-800 transform transition-transform duration-300 ease-in-out z-30
-          border-r border-gray-700`}
+          border-r border-gray-700 flex flex-col`}
       >
         <div className="flex flex-col items-center p-6 border-b border-gray-700">
           <img src="/R 1.svg" alt="Logo" className="h-12 w-auto mb-2" />
@@ -114,7 +114,8 @@ const Dashboard = () => {
           </ul>
         </nav>
 
-        <div className="border-t border-gray-700 p-4">
+        {/* User Info & Logout Button at the bottom */}
+        <div className="mt-auto border-t border-gray-700 p-4">
           <div className="flex items-center space-x-3 mb-4 px-4 py-2">
             <img
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
