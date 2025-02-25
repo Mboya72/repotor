@@ -11,6 +11,7 @@ export default function Signup() {
     username: "",
     email: "",
     password: "",
+    confirmPassword: ""
   });
   const router = useRouter();
 
@@ -20,6 +21,10 @@ export default function Signup() {
 
   const handleSignup = (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
     console.log("User Data:", formData, "Admin:", isAdmin);
 
     // Simulate successful signup (Replace this with API call)
@@ -72,6 +77,14 @@ export default function Signup() {
               type="password"
               name="password"
               placeholder="Password"
+              className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
               className="w-full mt-2 p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
               onChange={handleInputChange}
               required
