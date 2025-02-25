@@ -3,24 +3,29 @@
 import Head from "next/head";
 import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
+interface SigninFormData {
+  email: string;
+  password: string;
+}
+
 export default function Signin() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState<SigninFormData>({ email: "", password: "" });
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSignin = (e) => {
+  const handleSignin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Sign in Data:", formData);
 
     // Simulate sign-in (Replace this with an actual API call)
-    if (formData.email === "test@example.com" && formData.password === "password") {
+    if (formData.email.trim() === "test@example.com" && formData.password.trim() === "password") {
       router.push("/dashboard"); // Redirect to home/dashboard after successful login
     } else {
       setError("Invalid email or password. Please try again.");
@@ -35,7 +40,7 @@ export default function Signin() {
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
         {/* Left Side (Logo) */}
         <div className="md:w-1/2 flex justify-center items-center py-4 md:py-0">
-        <img src="/R 1.svg" alt="Logo" className="h-32 w-auto md:h-48" />
+          <img src="/R 1.svg" alt="Logo" className="h-32 w-auto md:h-48" />
         </div>
 
         {/* Right Side (Form) */}
@@ -43,7 +48,7 @@ export default function Signin() {
           <h2 className="text-2xl font-semibold">Welcome Back!</h2>
           <p className="text-orange-400">Sign in to your account.</p>
 
-          {/* Google Signin */}
+          {/* Google Sign-in */}
           <button className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300">
             <FaGoogle className="text-orange-500" />
             Sign in with Google

@@ -3,15 +3,22 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bookmark, Trash2 } from "lucide-react";
 
+// Define the Bookmark type
+interface BookmarkType {
+  id: number;
+  title: string;
+  reporter: string;
+}
+
 export default function BookmarkPage() {
-  const [bookmarks, setBookmarks] = useState([
+  const [bookmarks, setBookmarks] = useState<BookmarkType[]>([
     { id: 1, title: "Corruption Scandal Exposed", reporter: "@investigator1" },
     { id: 2, title: "New Environmental Laws Introduced", reporter: "@eco_warrior" },
     { id: 3, title: "Community Rallies for Justice", reporter: "@activist" }
   ]);
 
-  const removeBookmark = (id) => {
-    setBookmarks(bookmarks.filter((bookmark) => bookmark.id !== id));
+  const removeBookmark = (id: number): void => {
+    setBookmarks((prevBookmarks) => prevBookmarks.filter((bookmark) => bookmark.id !== id));
   };
 
   return (

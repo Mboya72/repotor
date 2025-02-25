@@ -1,5 +1,4 @@
 import Image from "/next/image";
-import Signup from "./signup/page";
 import Signin from "./signin/page"
 import ForgotPassword from "./ForgotPassword/page";
 

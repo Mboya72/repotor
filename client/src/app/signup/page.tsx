@@ -2,32 +2,41 @@
 
 import Head from "next/head";
 import { FaGoogle } from "react-icons/fa";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
+interface SignupFormData {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export default function Signup() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [formData, setFormData] = useState({
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [formData, setFormData] = useState<SignupFormData>({
     username: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const router = useRouter();
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
+
     console.log("User Data:", formData, "Admin:", isAdmin);
 
-    // Simulate successful signup (Replace this with API call)
+    // Simulate successful signup (Replace with actual API call)
     setTimeout(() => {
       router.push("/signin"); // Redirect to sign-in page
     }, 1000);
@@ -104,10 +113,7 @@ export default function Signup() {
               </label>
             </div>
 
-            <button
-              type="submit"
-              className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600"
-            >
+            <button type="submit" className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600">
               {isAdmin ? "Sign up as Admin" : "Sign up as User"}
             </button>
           </form>
