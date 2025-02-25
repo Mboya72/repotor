@@ -13,6 +13,7 @@ from config import Config
 import os
 
 from send_email import send_verification_email
+from password_change import password_change
 import cloudinary
 import cloudinary.uploader
 
@@ -367,6 +368,50 @@ class Users(Resource):
         if users:
             return make_response([u.to_dict() for u in users], 200)
         return make_response({"Error": "No users"}, 404)
+    
+class NewPasswordRequest(Resource):
+    def post(self):
+        data = request.get_json()
+        email = data.get('email')
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return make_response({"Error": "No user with that email found"}, 404)
+        
+        token = create_access_token(identity=user.email, expires_delta=timedelta(hours=1))
+        print("Reset password token generated:", token)
+        
+        status = password_change(user.email, token)
+        print("SendGrid status (reset email):", status)
+        
+        if not status:
+            return make_response({"Error": "Failed to send reset password email"}, 500)
+        
+        return make_response({"message": "Reset password email sent"}, 200)
+    
+class NewPassword(Resource):
+    def post(self, token):
+        data = request.get_json()
+        new_password = data.get("new_password")
+        if not new_password:
+            return make_response({"Error": "New password is required"}, 400)
+        
+        try:
+            decoded = decode_token(token)
+        except Exception as e:
+            print("Token decoding error:", e)
+            return make_response({"Error": "Invalid or expired token"}, 400)
+        
+        email = decoded.get("sub")
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return make_response({"Error": "User not found"}, 404)
+        
+        # Update the password (this will hash it via your model setter)
+        user.password_hash = new_password
+        db.session.commit()
+        
+        return make_response({"message": "Password reset successfully"}, 200)
+
 api.add_resource(Signup, '/signup')
 api.add_resource(Verify, '/verify/<string:token>')
 # api.add_resource(GoogleCallback, '/google_callback')
@@ -384,6 +429,8 @@ api.add_resource(UnlikeRecord, '/unlike_record/<int:record_id>')
 api.add_resource(FollowUser, '/follow_user/<int:followed_id>')
 api.add_resource(UnfollowUser, '/unfollow_user/<int:followed_id>')
 api.add_resource(Users, '/users')
+api.add_resource(NewPasswordRequest, '/newpassword')
+api.add_resource(NewPassword, '/newpassword/<string:token>')
 # print(app.url_map)
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
