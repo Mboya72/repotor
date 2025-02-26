@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://unpkg.com/leaflet/dist/leaflet.css');
 
 :root {
   --background: #ffffff;
