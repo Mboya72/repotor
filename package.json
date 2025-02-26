@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chart.js": "^4.4.8",
+    "emoji-picker-react": "^4.12.0",
     "imagekit": "^6.0.0",
     "imagekitio-next": "^1.0.1",
     "next": "15.1.7",
