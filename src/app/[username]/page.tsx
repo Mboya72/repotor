@@ -1,8 +1,27 @@
+"use client"
 import Feed from "@/components/MainPage/Feed";
 import Image from "next/image"; // Corrected import path
 import Link from "next/link";
+import { useState } from "react";
 
 const UserPage = () => {
+  const [coverImage, setCoverImage] = useState("/general/00.jpeg");
+  const [avatarImage, setAvatarImage] = useState("/general/hhh-Photoroom.png");
+
+  const handleCoverImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = URL.createObjectURL(event.target.files[0]);
+      setCoverImage(file);
+    }
+  };
+
+  const handleAvatarImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = URL.createObjectURL(event.target.files[0]);
+      setAvatarImage(file);
+    }
+  };
+
   return (
     <div className="">
       {/* PROFILE TITLE */}
@@ -18,11 +37,13 @@ const UserPage = () => {
         <div className="relative w-full">
           {/* COVER */}
           <div className="w-full aspect-[3/1] relative">
-            <Image className="h-80" src="/general/00.jpeg" alt="Cover Image" width={600} height={200} />
+            <Image className="h-80" src={coverImage} alt="Cover Image" width={600} height={200} />
+            <input type="file" accept="image/*" onChange={handleCoverImageChange} className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" />
           </div>
           {/* AVATAR */}
           <div className="w-1/5 aspect-square rounded-full overflow-hidden border-4 border-black bg-gray-300 absolute left-4 -translate-y-1/2">
-            <Image src="/general/hhh-Photoroom.png" alt="Avatar" width={100} height={100} />
+            <Image src={avatarImage} alt="Avatar" width={100} height={100} />
+            <input type="file" accept="image/*" onChange={handleAvatarImageChange} className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" />
           </div>
         </div>
         <div className="flex w-full items-center justify-end gap-2 p-2">

@@ -25,7 +25,7 @@ const PostInteractions = () => {
     setIsMessagePopupVisible(false); // Close the popup
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     console.log("Message sent:", message);
     setMessage('');
@@ -34,7 +34,7 @@ const PostInteractions = () => {
     handlePopupClose(); // Close the popup
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = (e: { target: { files: any[]; }; }) => {
     const file = e.target.files[0];
     if (file) {
       setImageFile(URL.createObjectURL(file)); // Create a local URL for preview
@@ -64,7 +64,7 @@ const PostInteractions = () => {
       });
   };
 
-  const handleEmojiClick = (emojiData) => {
+  const handleEmojiClick = (emojiData: { emoji: string; }) => {
     setMessage((prevMessage) => prevMessage + emojiData.emoji); // Add selected emoji to the message
     setShowEmojiPicker(false); // Close emoji picker after selection
   };
