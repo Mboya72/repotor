@@ -19,12 +19,6 @@ export default function Signin() {
     e.preventDefault();
     console.log("Sign in Data:", formData);
 
-    // Simulate sign-in (Replace this with an actual API call)
-    // if (formData.email === "test@example.com" && formData.password === "password") {
-    //   router.push("/dashboard"); // Redirect to home/dashboard after successful login
-    // } else {
-    //   setError("Invalid email or password. Please try again.");
-    // }
 
     fetch("http://localhost:5000/login", {
       method: "POST",
