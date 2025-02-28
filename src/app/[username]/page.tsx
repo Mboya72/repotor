@@ -3,11 +3,13 @@ import Feed from "@/components/MainPage/Feed";
 import Image from "next/image"; // Corrected import path
 import Link from "next/link";
 import { useState } from "react";
+import MainLayout from "../MainLayout";
 
 const UserPage = () => {
   const [coverImage, setCoverImage] = useState("/general/00.jpeg");
   const [avatarImage, setAvatarImage] = useState("/general/hhh-Photoroom.png");
 
+  const modal = undefined
   const handleCoverImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = URL.createObjectURL(event.target.files[0]);
@@ -23,6 +25,7 @@ const UserPage = () => {
   };
 
   return (
+    <MainLayout modal={modal}>
     <div className="">
       {/* PROFILE TITLE */}
       <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
@@ -100,6 +103,7 @@ const UserPage = () => {
       {/* FEED */}
       <Feed />
     </div>
+    </MainLayout>
   );
 };
 

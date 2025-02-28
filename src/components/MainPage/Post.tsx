@@ -106,6 +106,9 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
                               />
                               <span>Kenya</span>
                             </div>
+                            <div>
+                              <span className="text-red-600">Redflag</span>
+                            </div>
               </div>
             </Link>
             <PostInfo />

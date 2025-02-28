@@ -25,7 +25,7 @@ const PostModal = () => {
           <div className="relative w-10 h-10 rounded-full overflow-hidden">
             <Image
               src="/general/avatar.png" // Corrected to 'src'
-              alt="Lama Dev"
+              alt="Elvizz"
               width={100} // Corrected to 'width'
               height={100} // Corrected to 'height'
               unoptimized={true} // Optional to disable optimization if needed
