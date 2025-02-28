@@ -70,7 +70,7 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
         <div className="flex-1 flex flex-col gap-2">
           {/* TOP */}
           <div className="w-full flex justify-between">
-            <Link href={`/lamaWebDev`} className="flex gap-4">
+            <Link href={`/Elvizz`} className="flex gap-4">
               <div
                 className={`${
                   type !== "status" && "hidden"
@@ -115,7 +115,7 @@ const Post = async ({ type }: { type?: "status" | "comment" }) => {
           </div>
 
           {/* TEXT & MEDIA */}
-          <Link href={`/lamaWebDev/status/123`}>
+          <Link href={`/Elvizz/status/123`}>
             <p className={`${type === "status" && "text-lg"}`}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum,
               animi. Laborum commodi aliquam alias molestias odio, ab in,
