@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Recommendations = () => {
   return (
-    <div className="p-4 rounded-2xl border-[1px] border-borderGray flex flex-col gap-4">
+    <div className="p-4 rounded-2xl border-[1px] border-gray-700 flex flex-col gap-4">
       {/* USER CARD */}
       <div className='flex items-center justify-between'>
         {/* IMAGE AND USER INFO */}
