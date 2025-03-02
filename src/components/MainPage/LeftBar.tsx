@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image from 'next/image';
 
 const menuList = [
   {
@@ -50,19 +50,18 @@ const LeftBar = () => {
   return (
     <div className="h-screen sticky top-0 flex flex-col justify-between pt-2 pb-8">
       {/* LOGO MENU BUTTON */}
-      <div className="flex flex-col gap-4 text-lg items-center lg:items-start">
+      <div className="flex flex-col gap-4 text-lg items-center sm:items-start">
         {/* LOGO */}
-        <Link href="/" className="p-2 rounded-full hover:bg-[#181818]">
+        <Link href="/" className="p-2 rounded-full hover:bg-[#181818] ">
           <Image
-            src="/icons/R.svg"
+            src="/icons/R.svg"  // Correct way
             alt="Logo"
             width={50}
             height={50}
           />
         </Link>
-
         {/* MENU LIST */}
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4">
           {menuList.map((item) => (
             <Link
               href={item.link}
@@ -70,33 +69,29 @@ const LeftBar = () => {
               key={item.id}
             >
               <Image
-                src={`/icons/${item.icon}`}
+                src={`/icons/${item.icon}`} // Correct way to handle dynamic image paths
                 alt={item.name}
                 width={24}
                 height={24}
               />
-              <span className="hidden sm:inline-block">{item.name}</span>
+              <span className="hidden sm:inline">{item.name}</span>
             </Link>
           ))}
         </div>
-
-        {/* BUTTON: Visible only on small and medium screens */}
+        {/* BUTTON */}
         <Link
           href="/compose/post"
-          className="sm:hidden block bg-white text-black rounded-full w-12 h-12 flex items-center justify-center"
+          className="bg-white text-black rounded-full w-12 h-12 flex items-center justify-center sm:hidden"
         >
           <Image src="/icons/post.svg" alt="new post" width={24} height={24} />
         </Link>
-
-        {/* Visible for large screens only */}
         <Link
           href="/compose/post"
-          className="hidden lg:block bg-orange-600 text-black rounded-full font-bold py-2 px-20"
+          className="hidden sm:block bg-orange-600 text-black rounded-full font-bold py-2 px-8 sm:px-20"
         >
           Post
         </Link>
       </div>
-
       {/* USER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -104,16 +99,16 @@ const LeftBar = () => {
             <Image
               src="/general/hhh-Photoroom.png"
               alt="lama dev"
-              width={40}
+              width={40} // Adjusted the width and height
               height={40}
             />
           </div>
-          <div className="hidden lg:flex flex-col">
+          <div className="hidden sm:flex flex-col">
             <span className="font-bold">Elviz</span>
             <span className="text-sm text-textGray">@Elvizzz</span>
           </div>
         </div>
-        <div className="hidden lg:block cursor-pointer font-bold">...</div>
+        <div className="hidden sm:block cursor-pointer font-bold">...</div>
       </div>
     </div>
   );
