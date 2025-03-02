@@ -24,7 +24,7 @@ export default function RootLayout({
           <div className="px-2 xsm:px-4 xxl:px-8 ">
             <LeftBar />
           </div>
-          <div className="flex-1 lg:min-w-[600px] border-x-[1px] border-borderGray ">
+          <div className="flex-1 lg:min-w-[700px] border-[1px]  border-gray-700 ">
             {children}
             {modal}
           </div>

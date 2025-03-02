@@ -1,4 +1,4 @@
-"use client";
+"use client"; 
 import { useState } from 'react';
 import { FiMessageCircle, FiRepeat, FiThumbsUp, FiBookmark, FiShare2 } from 'react-icons/fi';
 import dynamic from 'next/dynamic';
@@ -12,8 +12,8 @@ const PostInteractions = () => {
   const [isMessagePopupVisible, setIsMessagePopupVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
-  const [videoFile, setVideoFile] = useState(null);
+  const [imageFile, setImageFile] = useState<string | null>(null);
+  const [videoFile, setVideoFile] = useState<string | null>(null);
   const [isShareOptionsVisible, setIsShareOptionsVisible] = useState(false);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
@@ -25,7 +25,7 @@ const PostInteractions = () => {
     setIsMessagePopupVisible(false); // Close the popup
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Message sent:", message);
     setMessage('');
@@ -34,15 +34,15 @@ const PostInteractions = () => {
     handlePopupClose(); // Close the popup
   };
 
-  const handleImageUpload = (e: { target: { files: any[]; }; }) => {
-    const file = e.target.files[0];
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       setImageFile(URL.createObjectURL(file)); // Create a local URL for preview
     }
   };
 
-  const handleVideoUpload = (e) => {
-    const file = e.target.files[0];
+  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       setVideoFile(URL.createObjectURL(file)); // Create a local URL for preview
     }
@@ -64,7 +64,7 @@ const PostInteractions = () => {
       });
   };
 
-  const handleEmojiClick = (emojiData: { emoji: string; }) => {
+  const handleEmojiClick = (emojiData: { emoji: string }) => {
     setMessage((prevMessage) => prevMessage + emojiData.emoji); // Add selected emoji to the message
     setShowEmojiPicker(false); // Close emoji picker after selection
   };
@@ -137,7 +137,7 @@ const PostInteractions = () => {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your reply..."
                 className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="4"
+                rows={4}
               />
               {/* Image Upload */}
               <input
