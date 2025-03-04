@@ -5,6 +5,7 @@ import Image from "next/image";
 import { shareAction } from "@/actions";
 import ImageEditor from "./ImageEditor";
 import EmojiPicker from "emoji-picker-react"; // Import emoji picker
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'; // Import Google Maps components
 
 const Share = () => {
   const [media, setMedia] = useState<File | null>(null);
@@ -40,21 +41,13 @@ const Share = () => {
   };
 
   const handleLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error getting location", error);
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
+    setShowLocationPicker(true); // Open location picker
+  };
+
+  const handleMapClick = (event: any) => {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    setLocation({ lat, lng });
     setShowLocationPicker(false); // Close location picker after selection
   };
 
@@ -65,9 +58,9 @@ const Share = () => {
   }, []); // Runs once when the component is mounted
 
   return (
-    <form
+    <div
       className="p-4 flex gap-4 flex-wrap"
-      action={(formData) => shareAction(formData, settings)}
+      onSubmit={(formData) => shareAction(formData, settings)} // Replaced form with div for testing
     >
       {/* AVATAR */}
       <div className="relative w-10 h-10 rounded-full overflow-hidden">
@@ -206,7 +199,7 @@ const Share = () => {
             {/* Location button */}
             <div
               className="cursor-pointer"
-              onClick={() => setShowLocationPicker(!showLocationPicker)}
+              onClick={handleLocationClick}
             >
               <Image
                 src="/icons/location.svg"
@@ -258,13 +251,17 @@ const Share = () => {
       {/* Location Picker */}
       {showLocationPicker && (
         <div className="absolute z-50 mt-4 bg-gray-800 p-4 rounded-lg">
-          <h3 className="text-white text-lg mb-2">Get Current Location</h3>
-          <button
-            onClick={handleLocationClick}
-            className="bg-blue-600 text-white py-2 px-4 rounded-lg"
-          >
-            Use My Current Location
-          </button>
+          <h3 className="text-white text-lg mb-2">Choose Location</h3>
+          <LoadScript googleMapsApiKey="AIzaSyDt-07h5Loqwro0Fc3aijCx1ujpAkEkwcc">
+            <GoogleMap
+              onClick={handleMapClick}
+              mapContainerStyle={{ height: "400px", width: "500px" }}
+              center={location || { lat: -34.397, lng: 150.644 }}
+              zoom={8}
+            >
+              {location && <Marker position={location} />}
+            </GoogleMap>
+          </LoadScript>
           {location && (
             <div className="mt-2 text-white">
               <p>Latitude: {location.lat}</p>
@@ -273,7 +270,7 @@ const Share = () => {
           )}
         </div>
       )}
-    </form>
+    </div>
   );
 };
 
