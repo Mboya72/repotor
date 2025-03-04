@@ -256,7 +256,7 @@ const Share = () => {
             <GoogleMap
               onClick={handleMapClick}
               mapContainerStyle={{ height: "400px", width: "500px" }}
-              center={location || { lat: -34.397, lng: 150.644 }}
+              center={location || { lat: 1.2921, lng: 36.8219 }}
               zoom={8}
             >
               {location && <Marker position={location} />}

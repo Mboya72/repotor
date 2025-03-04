@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 
 const menuList = [
   {
@@ -11,37 +11,37 @@ const menuList = [
   {
     id: 2,
     name: "Explore",
-    link: "/",
+    link: "/explore", // Ensure this points to the correct page
     icon: "explore.svg",
   },
   {
     id: 3,
     name: "Notification",
-    link: "/",
+    link: "/notifications", // Ensure this points to the correct page
     icon: "notification.svg",
   },
   {
     id: 4,
     name: "Messages",
-    link: "/",
+    link: "/messages", // Ensure this points to the correct page
     icon: "message.svg",
   },
   {
     id: 5,
     name: "Bookmarks",
-    link: "/",
+    link: "Bookmarks", // Ensure this points to the correct page
     icon: "bookmark.svg",
   },
   {
     id: 6,
     name: "Profile",
-    link: "/",
+    link: "/profile", // Ensure this points to the correct page
     icon: "profile.svg",
   },
   {
     id: 7,
     name: "More",
-    link: "/",
+    link: "/more", // Ensure this points to the correct page
     icon: "more.svg",
   },
 ];
@@ -54,7 +54,7 @@ const LeftBar = () => {
         {/* LOGO */}
         <Link href="/" className="p-2 rounded-full hover:bg-[#181818] ">
           <Image
-            src="/icons/R.svg"  // Correct way
+            src="/icons/R.svg"  // Correct way to use image path
             alt="Logo"
             width={50}
             height={50}
