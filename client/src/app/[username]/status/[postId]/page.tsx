@@ -16,6 +16,38 @@ const StatusPage = () => {
     const [post, setPost] = useState<any>(null);
     const [comments, setComments] = useState<any[]>([]);
     const [user, setUser] = useState<User | null>(null);
+    const [recommendations, setRecommendations] = useState<User[]>([]);
+    const [followedUsers, setFollowedUsers] = useState<User[]>([])
+
+  useEffect(() => {
+    if (!user) return;
+    fetch("https://repotor.onrender.com/users")
+      .then((r) => r.json())
+      .then((allUsers) => {
+        if (Array.isArray(allUsers)) {
+          // Set recommendations: filter out current user and admin users
+          const recommendationsList = allUsers.filter(
+            (u: User) => u.id !== user.id && !u.is_admin
+          );
+          const shuffled = recommendationsList.sort(() => Math.random() - 0.5);
+          const selectedRecommendations = shuffled.slice(0, 3);
+          setRecommendations(selectedRecommendations);
+          console.log("Recommendations:", selectedRecommendations);
+
+          // Set followed users: filter those users that are being followed by the logged-in user
+          // (Assuming user.following is an array of Follow objects with a followed_id field)
+          const followed = allUsers.filter((u: User) =>
+            user.following.some((follow: Follow) => follow.followed_id === u.id)
+          );
+          setFollowedUsers(followed);
+          console.log("Followed Users:", followed);
+        } else {
+          setRecommendations([]);
+          setFollowedUsers([]);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [user]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -61,7 +93,7 @@ const StatusPage = () => {
 
     return (
         <div>
-           <LeftBar/>
+           <LeftBar user={user}/>
         <div>
             <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
                 <Link href="/">
@@ -70,11 +102,11 @@ const StatusPage = () => {
                 <h1 className="font-bold text-lg">Post</h1>
             </div>
 
-            {post && user ? <Post post={post} type="status" user={user} /> : <p>Loading post...</p>}
+            {post && user ? <Post post={post} type="status" user={user} /> : <p className="text-center">Loading post...</p>}
 
             {user && comments && comments.length > 0 ? <Comments comments={comments} user={user} /> : <p>No comments yet...</p>}
         </div> 
-        <RightBar/>
+        <RightBar recommendations={recommendations} user={user} />
        </div>
     );
 };
