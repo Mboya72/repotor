@@ -16,6 +16,7 @@ python-dotenv = "*"
 flask-restful = "*"
 flask-dance = "*"
 cloudinary = "*"
+gunicorn = "*"
 
 [dev-packages]
 
