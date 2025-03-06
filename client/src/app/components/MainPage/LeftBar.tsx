@@ -134,7 +134,7 @@ const LeftBar = ({ user }: { user: User }) => {
             })
               .then((r) => {
                 if (r.ok) {
-                  window.location.reload();
+                  router.push('/')
                 }
               })
               .catch((err) => console.error(err));

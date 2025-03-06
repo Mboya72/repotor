@@ -3,7 +3,7 @@ from sendgrid.helpers.mail import Mail
 from flask import current_app
 
 def password_change(email, token):
-    url = f"{current_app.config['FRONTEND_URL']}/newpassword?token={token}"
+    url = f"https://repotor.vercel.app/newpassword?token={token}"
     message = Mail(
         from_email="noreply.ireporterorg@gmail.com",
         to_emails=email,
