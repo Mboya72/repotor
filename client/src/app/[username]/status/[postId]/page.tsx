@@ -92,8 +92,11 @@ const StatusPage = () => {
     }, [postId]);
 
     return (
-        <div>
+        <div className="min-h-screen flex justify-center">
+        {/* Left Sidebar */}
+        <div className="hidden lg:block w-64 px-4 border-r border-gray-300">
            {user? <LeftBar user={user} />: null}
+           </div>
         <div>
             <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
                 <Link href="/">
@@ -106,8 +109,11 @@ const StatusPage = () => {
 
             {user && comments && comments.length > 0 ? <Comments comments={comments} user={user} /> : <p className="text-center">No comments yet...</p>}
         </div> 
+         {/* Right Sidebar */}
+      <div className="hidden xl:block w-64 px-4 border-l border-gray-300">
         {user && recommendations.length ?<RightBar recommendations={recommendations} user={user} />: null}
-       </div>
+        </div>
+        </div>
     );
 };
 
