@@ -49,7 +49,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
 
       try {
         if (editedMedia.type.includes("image")) {
-          const response = await fetch("http://localhost:5000/image_upload", {
+          const response = await fetch("https://repotor.onrender.com/image_upload", {
             method: "POST",
             body: formData,
           });
@@ -61,7 +61,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
             console.error("Error uploading edited image");
           }
         } else if (editedMedia.type.startsWith("video/")) {
-          const response = await fetch("http://localhost:5000/video_upload", {
+          const response = await fetch("https://repotor.onrender.com/video_upload", {
             method: "POST",
             body: formData,
           });
@@ -123,7 +123,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
       payload.longitude = editedLocation.lng;
     }
 
-    fetch(`http://localhost:5000/record/${post.id}`, {
+    fetch(`https://repotor.onrender.com/record/${post.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -210,7 +210,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
                 onClick={() => {
                   if (confirm("Are you sure you want to delete this post?")) {
                     // Call your delete API endpoint here
-                    fetch(`http://localhost:5000/record/${post.id}`, {
+                    fetch(`https://repotor.onrender.com/record/${post.id}`, {
                       method: "DELETE",
                       credentials: "include",
                     })

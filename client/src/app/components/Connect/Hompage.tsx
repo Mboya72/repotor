@@ -19,7 +19,7 @@ const Homepage: React.FC<props> = ({ user }) => {
 
   useEffect(() => {
     // Fetch posts from backend
-    fetch("http://localhost:5000/records")
+    fetch("https://repotor.onrender.com/records")
       .then((r) => r.json())
       .then((records) => {
         if (Array.isArray(records)) {
@@ -36,7 +36,7 @@ const Homepage: React.FC<props> = ({ user }) => {
   useEffect(() => {
     if (!user || recommendations.length > 0) return; // Only run if user is loaded and recommendations are empty
     // Fetch recommendations from backend
-    fetch("http://localhost:5000/users")
+    fetch("https://repotor.onrender.com/users")
       .then((r) => r.json())
       .then((allUsers) => {
         if (allUsers) {

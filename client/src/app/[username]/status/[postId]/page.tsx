@@ -18,7 +18,7 @@ const StatusPage = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/check_session", {
+                const response = await fetch("https://repotor.onrender.com/check_session", {
                     method: "GET",
                     credentials: "include",
                 });
@@ -40,12 +40,12 @@ const StatusPage = () => {
         if (postId) {
             async function fetchData() {
                 try {
-                    const postResponse = await fetch(`http://localhost:5000/record/${postId}`);
+                    const postResponse = await fetch(`https://repotor.onrender.com/record/${postId}`);
                     const postData = await postResponse.json();
                     console.log("Post", postData);
                     setPost(postData);
 
-                    const commentsResponse = await fetch(`http://localhost:5000/comments_for_record/${postId}`);
+                    const commentsResponse = await fetch(`https://repotor.onrender.com/comments_for_record/${postId}`);
                     const commentsData = await commentsResponse.json();
                     setComments(commentsData['comments']);
                 } catch (error) {

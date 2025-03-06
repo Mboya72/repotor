@@ -14,7 +14,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ recommendations, user
   const [localFollowing, setLocalFollowing] = useState<Follow[]>(user.following);
 
   const handleFollow = (recommendation: User) => {
-    fetch(`http://localhost:5000/follow_user/${recommendation.id}`, {
+    fetch(`https://repotor.onrender.com/follow_user/${recommendation.id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: user.id }),
@@ -34,7 +34,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ recommendations, user
   };
 
   const handleUnfollow = (recommendation: User) => {
-    fetch(`http://localhost:5000/unfollow_user/${recommendation.id}`, {
+    fetch(`https://repotor.onrender.com/unfollow_user/${recommendation.id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: user.id }),

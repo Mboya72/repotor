@@ -34,7 +34,7 @@ const Comments: React.FC<CommentProps> = ({ comments, user }) => {
                     onClick={() => {
                       if (confirm("Are you sure you want to delete this comment?")) {
                         // Call your delete API endpoint here
-                        fetch(`http://localhost:5000/comments_for_record/${comment.record_id}`, {
+                        fetch(`https://repotor.onrender.com/comments_for_record/${comment.record_id}`, {
                           method: "DELETE",
                           credentials: "include",
                           headers: {"Content-Type": "application/json"},

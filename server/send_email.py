@@ -3,7 +3,7 @@ from sendgrid.helpers.mail import Mail
 from flask import current_app
 
 def send_verification_email(email, token):
-    url = f"http://localhost:5000/verify/{token}"
+    url = f"https://repotor.onrender.com/verify/{token}"
     message = Mail(
         from_email="noreply.ireporterorg@gmail.com",
         to_emails=email,

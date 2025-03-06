@@ -133,7 +133,7 @@ const RedflagsPage = ({ posts }: { posts:Record[] }) => {
               <div className="mt-4 flex flex-wrap gap-4 justify-between">
                 <button
                   onClick={() => {
-                    fetch(`http://localhost:5000/record/${post.id}`, {
+                    fetch(`https://repotor.onrender.com/record/${post.id}`, {
                       method: "PATCH",
                       headers: {"Content-Type": "application/json"},
                       body: JSON.stringify({status: "under investigation"})
@@ -141,7 +141,7 @@ const RedflagsPage = ({ posts }: { posts:Record[] }) => {
                     .then((r) => {
                       if (r.ok) {
                         alert("Set to Under Investigation.")
-                        fetch(`http://localhost:5000/post_status`, {
+                        fetch(`https://repotor.onrender.com/post_status`, {
                           method: "POST",
                           headers: {"Content-Type": "application/json"},
                           body: JSON.stringify({"post_id": post.id})
@@ -161,7 +161,7 @@ const RedflagsPage = ({ posts }: { posts:Record[] }) => {
                 </button>
                 <button
                   onClick={() => {
-                    fetch(`http://localhost:5000/record/${post.id}`, {
+                    fetch(`https://repotor.onrender.com/record/${post.id}`, {
                       method: "PATCH",
                       headers: {"Content-Type": "application/json"},
                       body: JSON.stringify({status: "rejected"})
@@ -169,7 +169,7 @@ const RedflagsPage = ({ posts }: { posts:Record[] }) => {
                     .then((r) => {
                       if (r.ok) {
                         alert("Set to Rejected.")
-                        fetch(`http://localhost:5000/post_status`, {
+                        fetch(`https://repotor.onrender.com/post_status`, {
                           method: "POST",
                           headers: {"Content-Type": "application/json"},
                           body: JSON.stringify({"post_id": post.id})
@@ -189,7 +189,7 @@ const RedflagsPage = ({ posts }: { posts:Record[] }) => {
                 </button>
                 <button
                   onClick={() => {
-                    fetch(`http://localhost:5000/record/${post.id}`, {
+                    fetch(`https://repotor.onrender.com/record/${post.id}`, {
                       method: "PATCH",
                       headers: {"Content-Type": "application/json"},
                       body: JSON.stringify({status: "resolved"})
@@ -197,7 +197,7 @@ const RedflagsPage = ({ posts }: { posts:Record[] }) => {
                     .then((r) => {
                       if (r.ok) {
                         alert("Set to Resolved.")
-                        fetch(`http://localhost:5000/post_status`, {
+                        fetch(`https://repotor.onrender.com/post_status`, {
                           method: "POST",
                           headers: {"Content-Type": "application/json"},
                           body: JSON.stringify({"post_id": post.id})

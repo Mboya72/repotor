@@ -7,7 +7,7 @@ const UsersPage = () => {
 
   // Refetch function
   const fetchUsers = () => {
-    fetch("http://localhost:5000/users")
+    fetch("https://repotor.onrender.com/users")
       .then((r) => r.json())
       .then((users) => {
         setUsers(users);
@@ -79,7 +79,7 @@ const UsersPage = () => {
                 </button>
                 <button className="bg-red-600 text-white px-4 py-2 rounded-md text-sm ml-2" onClick={() => {
                   if (confirm("Are you sure you'd like to delete this user?")) {
-                    fetch(`http://localhost:5000/users/${user.id}`, {
+                    fetch(`https://repotor.onrender.com/users/${user.id}`, {
                       method: "DELETE",
                       credentials: "include"
                     })

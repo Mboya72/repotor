@@ -20,7 +20,7 @@ export default function Home() {
     // Auto-login: fetch the session data from your backend
     const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/check_session", {
+        const response = await fetch("https://repotor.onrender.com/check_session", {
           method: "GET",
           credentials: "include",
         });

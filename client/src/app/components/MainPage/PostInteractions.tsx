@@ -24,14 +24,14 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
   const [comment_count, setCommentCount] = useState(0)
 
   useEffect(() => {
-    fetch(`http://localhost:5000/bookmark_status/${post.id}/${user.id}`)
+    fetch(`https://repotor.onrender.com/bookmark_status/${post.id}/${user.id}`)
       .then(r => r.json())
       .then(data => setHasBookmarked(data.has_bookmarked))
       .catch(err => console.error(err))
   }, [post.id])
 
   useEffect(() => {
-    fetch(`http://localhost:5000/like_count/${post.id}`)
+    fetch(`https://repotor.onrender.com/like_count/${post.id}`)
       .then((r) => r.json())
       .then((data) => {
         setLikeCount(data.like_count); // Set the fetched like count
@@ -40,7 +40,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
   }, [post.id]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/comment_count_for_record/${post.id}`)
+    fetch(`https://repotor.onrender.com/comment_count_for_record/${post.id}`)
       .then((r) => r.json())
       .then((data) => {
         setCommentCount(data.comment_count); // Set the fetched like count
@@ -49,7 +49,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
   }, [post.id]);
   
   useEffect(() => {
-    fetch(`http://localhost:5000/like_status/${post.id}/${user.id}`)
+    fetch(`https://repotor.onrender.com/like_status/${post.id}/${user.id}`)
       .then(r => r.json())
       .then((data) => {
         data.has_liked ? setHasLiked(true) : setHasLiked(false)
@@ -67,7 +67,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     console.log("Message sent:", message);
-    fetch(`http://localhost:5000//comments_for_record/${post.id}`, {
+    fetch(`https://repotor.onrender.com/comments_for_record/${post.id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -97,7 +97,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
       const formData = new FormData();
       formData.append("file", file);
       try {
-        const response = await fetch("http://localhost:5000/image_upload", {
+        const response = await fetch("https://repotor.onrender.com/image_upload", {
           method: "POST",
           body: formData,
         });
@@ -121,7 +121,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
       const formData = new FormData();
       formData.append("file", file);
       try {
-        const response = await fetch("http://localhost:5000/video_upload", {
+        const response = await fetch("https://repotor.onrender.com/video_upload", {
           method: "POST",
           body: formData,
         });
@@ -161,7 +161,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
 
   const handleLikeToggle = () => {
     const method = hasLiked ? 'DELETE' : 'POST'; // Toggle between POST and DELETE
-    const url = `http://localhost:5000/like_record/${post.id}`;
+    const url = `https://repotor.onrender.com/like_record/${post.id}`;
     const body = JSON.stringify({
       user_id: user.id
     });
@@ -186,7 +186,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
 
   const handleBookmarkToggle = () => {
     const method = hasBookmarked ? 'DELETE' : 'POST';
-    const url = `http://localhost:5000/bookmark/${post.id}`;
+    const url = `https://repotor.onrender.com/bookmark/${post.id}`;
     const body = JSON.stringify({
       user_id: user.id
     });

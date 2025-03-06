@@ -35,7 +35,7 @@ const Dashboard: React.FC<props> = ({ user }) => {
 
   useEffect(() => {
     // Fetch posts from backend
-    fetch("http://localhost:5000/records")
+    fetch("https://repotor.onrender.com/records")
       .then((r) => r.json())
       .then((records) => {
         setAllPosts(records);
@@ -148,7 +148,7 @@ const Dashboard: React.FC<props> = ({ user }) => {
           </div>
           <button className="w-full flex items-center px-4 py-2 text-sm text-red-400 hover:bg-gray-700 rounded-md" onClick={() => {
             if (confirm("Are you sure you'd like to logout?")) {
-              fetch(`http://localhost:5000/logout`, {
+              fetch(`https://repotor.onrender.com/logout`, {
                 method: "DELETE",
                 credentials: "include",
               })

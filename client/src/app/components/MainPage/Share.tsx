@@ -78,7 +78,7 @@ const Share: React.FC<Props> = ({ user }) => {
 
       try {
         if (media.type.includes("image")) {
-          const response = await fetch("http://localhost:5000/image_upload", {
+          const response = await fetch("https://repotor.onrender.com/image_upload", {
             method: "POST",
             body: formData,
           });
@@ -91,7 +91,7 @@ const Share: React.FC<Props> = ({ user }) => {
             console.error("Error uploading image");
           }
         } else if (media.type.startsWith("video/")) {
-          const response = await fetch("http://localhost:5000/video_upload", {
+          const response = await fetch("https://repotor.onrender.com/video_upload", {
             method: "POST",
             body: formData,
           });
@@ -138,7 +138,7 @@ const Share: React.FC<Props> = ({ user }) => {
     }
 
 
-    fetch("http://localhost:5000/records", {
+    fetch("https://repotor.onrender.com/records", {
       method: "POST",
       credentials: "include",
       headers: {

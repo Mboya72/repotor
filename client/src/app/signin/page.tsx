@@ -27,7 +27,7 @@ export default function Signin() {
     console.log("Sign in Data:", formData);
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("https://repotor.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default function Signin() {
   // Async function to handle Google signin
   const handleGoogleSignin = async () => {
     try {
-      window.location.href = "http://localhost:5000/login/google";
+      window.location.href = "https://repotor.onrender.com/login/google";
       router.push('/'); // Redirect immediately after initiating Google login
     } catch (err) {
       console.error("Error during Google signin:", err);

@@ -128,7 +128,7 @@ const LeftBar = ({ user }: { user: User }) => {
         </div>
         <div className="hidden lg:block cursor-pointer font-bold" onClick={() => {
           if (confirm("Are you sure you'd like to logout?")) {
-            fetch(`http://localhost:5000/logout`, {
+            fetch(`https://repotor.onrender.com/logout`, {
               method: "DELETE",
               credentials: "include",
             })

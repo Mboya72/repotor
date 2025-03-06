@@ -27,7 +27,7 @@ const UserPage = () => {
     // Auto-login: fetch the session data from your backend
     const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/check_session", {
+        const response = await fetch("https://repotor.onrender.com/check_session", {
           method: "GET",
           credentials: "include",
         });
@@ -49,7 +49,7 @@ const UserPage = () => {
 
   useEffect(() => {
     if (!user) return;
-    fetch("http://localhost:5000/users")
+    fetch("https://repotor.onrender.com/users")
       .then((r) => r.json())
       .then((allUsers) => {
         if (Array.isArray(allUsers)) {
@@ -80,7 +80,7 @@ const UserPage = () => {
 
   useEffect(() => {
     // Fetch posts from backend
-    fetch("http://localhost:5000/records")
+    fetch("https://repotor.onrender.com/records")
       .then((r) => r.json())
       .then((records) => {
         if (Array.isArray(records)) {
