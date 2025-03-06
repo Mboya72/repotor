@@ -30,7 +30,7 @@ app.config.from_object(Config)
 bcrypt = Bcrypt(app)
 
 migrate = Migrate(app, db)
-cors = CORS(app, supports_credentials=True, origins=["https://ireporter-site.netlify.app", "https://accounts.google.com"])
+cors = CORS(app, supports_credentials=True, origins=["https://repotor.vercel.app/", "https://accounts.google.com"])
 api = Api(app)
 
 db.init_app(app)
@@ -126,7 +126,7 @@ def post_google_auth():
     session["user_id"] = user.id
     token = create_access_token(identity=user.email)
     # Redirect to your frontend, passing the token as a query parameter (or handle as desired).
-    return redirect(f"https://ireporter-site.netlify.app/?token={token}")
+    return redirect(f"https://repotor.vercel.app//?token={token}")
 
 class CheckSession(Resource):
     def get(self):
