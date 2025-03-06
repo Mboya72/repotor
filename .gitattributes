@@ -1,0 +1,3 @@
+node_modules/** !text !filter !merge !diff
+/node_modules/** !text !filter !merge !diff
+* !text !filter !merge !diff
