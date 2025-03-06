@@ -93,7 +93,7 @@ const StatusPage = () => {
 
     return (
         <div>
-           <LeftBar user={user}/>
+           {user? <LeftBar user={user} />: null}
         <div>
             <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
                 <Link href="/">
@@ -104,9 +104,9 @@ const StatusPage = () => {
 
             {post && user ? <Post post={post} type="status" user={user} /> : <p className="text-center">Loading post...</p>}
 
-            {user && comments && comments.length > 0 ? <Comments comments={comments} user={user} /> : <p>No comments yet...</p>}
+            {user && comments && comments.length > 0 ? <Comments comments={comments} user={user} /> : <p className="text-center">No comments yet...</p>}
         </div> 
-        <RightBar recommendations={recommendations} user={user} />
+        {user && recommendations.length ?<RightBar recommendations={recommendations} user={user} />: null}
        </div>
     );
 };
