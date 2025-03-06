@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import React from "react";
-import { User } from "@/app/components/types";
+import { Follow, User } from "@/app/components/types";
 import { useParams } from 'next/navigation';
 import RightBar from "@/app/components/MainPage/RightBar";
 import LeftBar from "@/app/components/MainPage/LeftBar";
