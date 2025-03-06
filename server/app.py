@@ -30,7 +30,7 @@ app.config.from_object(Config)
 bcrypt = Bcrypt(app)
 
 migrate = Migrate(app, db)
-cors = CORS(app, supports_credentials=True, origins=["https://repotor.vercel.app/", "https://accounts.google.com"])
+cors = CORS(app, supports_credentials=True, origins=["https://repotor.vercel.app", "https://accounts.google.com"])
 api = Api(app)
 
 db.init_app(app)
