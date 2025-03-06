@@ -126,7 +126,7 @@ def post_google_auth():
     session["user_id"] = user.id
     token = create_access_token(identity=user.email)
     # Redirect to your frontend, passing the token as a query parameter (or handle as desired).
-    return redirect(f"https://repotor.vercel.app//?token={token}")
+    return redirect(f"https://repotor.vercel.app/?token={token}")
 
 class CheckSession(Resource):
     def get(self):
