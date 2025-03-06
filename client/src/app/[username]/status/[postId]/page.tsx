@@ -12,7 +12,7 @@ interface Params {
   postId: string; // Assuming the postId is in the 'id' param
 }
 
-const StatusPage = ({ params }: { params: Params }) => {
+const StatusPage = async ({ params }: { params: Params }) => {
   const [postId, setPostId] = useState<string | null>(null); // Initialize state for postId
   const [post, setPost] = useState<any>(null); // State for the post data
   const [comments, setComments] = useState<any[]>([]); // State for comments data
