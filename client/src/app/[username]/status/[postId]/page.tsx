@@ -97,7 +97,7 @@ const StatusPage = () => {
         <div className="hidden lg:block w-64 px-4 border-r border-gray-300">
            {user? <LeftBar user={user} />: null}
            </div>
-        <div>
+        <div className="w-[600px] ">
             <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
                 <Link href="/">
                     <Image src="/icons/back.svg" alt="back" width={24} height={24} />
