@@ -211,7 +211,7 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
   }
 
   return (
-    <div className="bg-gray-900 text-white">
+    <div className="bg-black text-white">
       <div className="flex items-center justify-between gap-4 lg:gap-16 my-2 text-textGray">
         <div className="flex items-center justify-between flex-1">
           {/* COMMENTS */}
