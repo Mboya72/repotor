@@ -63,11 +63,11 @@ export default function Signin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-black px-4">
       <Head>
         <title>Sign In</title>
       </Head>
-      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-black rounded-lg shadow-lg p-6 md:p-8">
         {/* Left Side (Logo) */}
         <div className="md:w-1/2 flex justify-center items-center py-4 md:py-0">
           <img src="/R 1.svg" alt="Logo" className="h-32 w-auto md:h-48" />
@@ -79,7 +79,7 @@ export default function Signin() {
           <p className="text-orange-400">Sign in to your account.</p>
 
           {/* Google Signin */}
-          <button onClick={handleGoogleSignin} className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300">
+          <button onClick={handleGoogleSignin} className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-full py-2 gap-2 transition hover:bg-gray-300">
             <FaGoogle className="text-orange-500" />
             Sign in with Google
           </button>
@@ -113,7 +113,7 @@ export default function Signin() {
               </Link>
             </div>
 
-            <button type="submit" className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600">
+            <button type="submit" className="w-full mt-4 bg-orange-500 py-2 rounded-full transition hover:bg-orange-600">
               Sign in
             </button>
           </form>
@@ -123,7 +123,7 @@ export default function Signin() {
           </div>
 
           <Link href="/signup">
-            <button className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600">
+            <button className="w-full mt-4 bg-orange-500 py-2 rounded-full transition hover:bg-orange-600">
               Don't have an account? Sign up
             </button>
           </Link>
