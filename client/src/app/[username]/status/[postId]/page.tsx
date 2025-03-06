@@ -61,6 +61,8 @@ const StatusPage = () => {
 
     return (
        <LeftBar/>
+       <div>
+
         <div>
             <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
                 <Link href="/">
@@ -73,6 +75,7 @@ const StatusPage = () => {
 
             {user && comments && comments.length > 0 ? <Comments comments={comments} user={user} /> : <p>No comments yet...</p>}
         </div> 
+       </div>
         <RightBar/>
     );
 };
