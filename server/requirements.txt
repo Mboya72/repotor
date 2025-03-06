@@ -30,3 +30,4 @@ starkbank-ecdsa==2.2.0
 typing-extensions==4.12.2; python_version >= '3.8'
 werkzeug==3.0.6; python_version >= '3.8'
 zipp==3.20.2; python_version >= '3.8'
+Gunicorn
