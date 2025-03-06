@@ -43,11 +43,11 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-black px-4">
       <Head>
         <title>Sign Up</title>
       </Head>
-      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-black rounded-lg shadow-lg p-6 md:p-8">
         {/* Left Side (Logo) */}
         <div className="md:w-1/2 flex justify-center items-center py-4 md:py-0">
           <img src="/R 1.svg" alt="Logo" className="h-32 w-auto md:h-48" />
