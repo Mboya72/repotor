@@ -90,48 +90,54 @@ const PostInteractions = ({ post, user}: { post: Record, user: User}) => {
 
   };
 
-  const handleImageUpload = async (e: { target: { files: any[]; }; }) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await fetch("http://localhost:5000/image_upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Reply image upload response:", data);
-        setImageFile(data.image_url); // Create a local URL for preview
-      } else {
-        console.error("Error uploading reply image")
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const response = await fetch("http://localhost:5000/image_upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Reply image upload response:", data);
+          setImageFile(data.image_url); // Set preview URL from response
+        } else {
+          console.error("Error uploading reply image");
+        }
+      } catch (err) {
+        console.error("Error uploading reply image:", err);
       }
-    } catch (err) {
-      console.error("Error uploading reply image:", err);
-    }
-  }
-
-  const handleVideoUpload = async (e: { target: { files: any[]; }; }) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await fetch("http://localhost:5000/image_upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Reply image upload response:", data);
-        setVideoFile(data.image_url); // Create a local URL for preview
-      } else {
-        console.error("Error uploading reply image")
-      }
-    } catch (err) {
-      console.error("Error uploading reply image:", err);
     }
   };
 
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const response = await fetch("http://localhost:5000/video_upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Reply video upload response:", data);
+          setVideoFile(data.video_url); // Update state with the returned video URL
+        } else {
+          console.error("Error uploading reply video");
+        }
+      } catch (err) {
+        console.error("Error uploading reply video:", err);
+      }
+    }
+  };
+  
   const handleShareClick = () => {
     setIsShareOptionsVisible(!isShareOptionsVisible); // Toggle share options visibility
   };
