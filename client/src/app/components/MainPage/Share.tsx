@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-// import { shareAction } from "@/actions";
 import { User } from "../types";
 import ImageEditor from "./ImageEditor";
 import EmojiPicker from "emoji-picker-react"; // Import emoji picker
-
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'; // Import Google Maps components
 
 interface Props {
   user: User;
@@ -45,21 +44,13 @@ const Share: React.FC<Props> = ({ user }) => {
   };
 
   const handleLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error getting location", error);
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
+    setShowLocationPicker(true); // Open location picker
+  };
+
+  const handleMapClick = (event: any) => {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    setLocation({ lat, lng });
     setShowLocationPicker(false); // Close location picker after selection
   };
 
@@ -165,12 +156,8 @@ const Share: React.FC<Props> = ({ user }) => {
 
   };
 
-
   return (
-    <form
-      className="p-4 flex gap-4 flex-wrap"
-    // action={(formData) => shareAction(formData, settings)}
-    >
+    <form className="p-4 flex gap-4 flex-wrap">
       {/* AVATAR */}
       <div className="relative w-10 h-10 rounded-full overflow-hidden">
         <Image
@@ -306,7 +293,7 @@ const Share: React.FC<Props> = ({ user }) => {
             {/* Location button */}
             <div
               className="cursor-pointer"
-              onClick={() => setShowLocationPicker(!showLocationPicker)}
+              onClick={handleLocationClick}
             >
               <Image
                 src="/icons/location.svg"
@@ -334,45 +321,59 @@ const Share: React.FC<Props> = ({ user }) => {
               onChange={(e) =>
                 setPostType(e.target.value as "red-flag" | "intervention")
               }
-              className="bg-transparent border border-[#FB6535] p-2 rounded-lg focus:border-[#FB6535] focus:outline-none"
+              className="bg-transparent border border-[#FB6535] p-2 rounded-lg focus:border-[#FB6535]"
             >
-              <option value="red-flag">Red-Flag</option>
-              <option value="intervention">Intervention Record</option>
+              <option value="red-flag">Red Flag</option>
+              <option value="intervention">Intervention</option>
             </select>
           </div>
-
-          {/* Post button */}
-          <button className="bg-[#FB6535] text-black font-bold rounded-full py-2 px-4" type="button" onClick={() => handlePost()}>
+        </div>
+        {/* Emoji Picker */}
+        {showEmojiPicker && (
+          <div className="absolute top-16 left-0">
+            <EmojiPicker onEmojiClick={handleEmojiClick} />
+          </div>
+        )}
+        {/* Location Picker */}
+        {showLocationPicker && (
+          <div className="relative w-full h-80">
+            <LoadScript googleMapsApiKey="AIzaSyDt-07h5Loqwro0Fc3aijCx1ujpAkEkwcc">
+              <GoogleMap
+                mapContainerStyle={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                zoom={12}
+                center={{
+                  lat: 37.7749, // Default to San Francisco coordinates
+                  lng: -122.4194,
+                }}
+                onClick={handleMapClick}
+              >
+                {location && (
+                  <Marker position={location} />
+                )}
+              </GoogleMap>
+            </LoadScript>
+          </div>
+        )}
+        <div className="flex gap-4 justify-between">
+          <div className="flex gap-4">
+            {/* POST DATE AND TIME */}
+            <div className="text-sm text-textGray">
+              <p>Date: {postDate}</p>
+              <p>Time: {postTime}</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handlePost}
+            className="bg-[#FB6535] text-white py-2 px-4 rounded-xl"
+          >
             Post
           </button>
         </div>
       </div>
-
-      {/* Emoji Picker */}
-      {showEmojiPicker && (
-        <div className="absolute z-50 mt-4">
-          <EmojiPicker onEmojiClick={handleEmojiClick} />
-        </div>
-      )}
-
-      {/* Location Picker */}
-      {showLocationPicker && (
-        <div className="absolute z-50 mt-4 bg-gray-800 p-4 rounded-lg">
-          <h3 className="text-white text-lg mb-2">Get Current Location</h3>
-          <button
-            onClick={handleLocationClick}
-            className="bg-blue-600 text-white py-2 px-4 rounded-lg"
-          >
-            Use My Current Location
-          </button>
-          {location && (
-            <div className="mt-2 text-white">
-              <p>Latitude: {location.lat}</p>
-              <p>Longitude: {location.lng}</p>
-            </div>
-          )}
-        </div>
-      )}
     </form>
   );
 };

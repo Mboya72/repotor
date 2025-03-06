@@ -110,7 +110,7 @@ const StatusPage = () => {
             {user && comments && comments.length > 0 ? <Comments comments={comments} user={user} /> : <p className="text-center">No comments yet...</p>}
         </div> 
          {/* Right Sidebar */}
-      <div className="hidden xl:block w-85 px-4 border-l border-gray-300">
+      <div className="hidden xl:block px-4 border-l border-gray-300">
         {user && recommendations.length ?<RightBar recommendations={recommendations} user={user} />: null}
         </div>
         </div>

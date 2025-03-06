@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.6",
     "chart.js": "^4.4.8",
     "emoji-picker-react": "^4.12.0",
     "imagekitio-next": "^1.0.1",

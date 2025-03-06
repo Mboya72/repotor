@@ -16,24 +16,6 @@ const LeftBar = ({ user }: { user: User }) => {
       icon: "home.svg",
     },
     {
-      id: 2,
-      name: "Explore",
-      link: "/",
-      icon: "explore.svg",
-    },
-    {
-      id: 3,
-      name: "Notification",
-      link: "/",
-      icon: "notification.svg",
-    },
-    {
-      id: 4,
-      name: "Messages",
-      link: "/",
-      icon: "message.svg",
-    },
-    {
       id: 5,
       name: "Bookmarks",
       link: `/${user?.username}?tab=bookmarks`,
