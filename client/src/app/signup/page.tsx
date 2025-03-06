@@ -85,7 +85,7 @@ export default function Signup() {
 
           {/* Google Signup */}
           <button
-            className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-md py-2 gap-2 transition hover:bg-gray-300"
+            className="flex items-center justify-center w-full mt-4 bg-white text-black rounded-full py-2 gap-2 transition hover:bg-gray-300"
             onClick={handleGoogleSignup}
           >
             <FaGoogle className="text-orange-500" />
@@ -143,7 +143,7 @@ export default function Signup() {
               </label>
             </div>
 
-            <button type="submit" className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600">
+            <button type="submit" className="w-full mt-4 bg-orange-500 py-2 rounded-full transition hover:bg-orange-600">
               Sign up 
             </button>
           </form>
@@ -155,7 +155,7 @@ export default function Signup() {
           {/* Redirect to Signin Page */}
           <button
             onClick={() => router.push("/signin")}
-            className="w-full mt-4 bg-orange-500 py-2 rounded-md transition hover:bg-orange-600"
+            className="w-full mt-4 bg-orange-500 py-2 rounded-full transition hover:bg-orange-600"
           >
             Already have an account?
           </button>
