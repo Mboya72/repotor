@@ -8,6 +8,7 @@ import { Record, User } from "../types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiFlag } from "react-icons/fi";
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'; // Import Google Maps components
 
 interface PostProps {
   post: Record;
@@ -222,6 +223,21 @@ const Post = ({ post, type = "status", user }: PostProps) => {
             )
           )}
 
+          {/* Google Map for Location */}
+          {post.latitude && post.longitude && (
+            <div className="mt-4 w-full h-60">
+              <LoadScript googleMapsApiKey="AIzaSyDt-07h5Loqwro0Fc3aijCx1ujpAkEkwcc">
+                <GoogleMap
+                  mapContainerStyle={{ width: '100%', height: '100%' }}
+                  zoom={12}
+                  center={{ lat: post.latitude, lng: post.longitude }}
+                >
+                  <Marker position={{ lat: post.latitude, lng: post.longitude }} />
+                </GoogleMap>
+              </LoadScript>
+            </div>
+          )}
+
           {/* POST INTERACTIONS */}
           <PostInteractions post={post} user={user} />
 
@@ -229,7 +245,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
           {isEditing && (
             <button
               onClick={saveEdits}
-              className="mt-4 p-2 bg-blue-500 text-white rounded-lg"
+              className="mt-4 p-2 bg-[#FB6535] text-white rounded-full"
             >
               Save
             </button>
@@ -249,7 +265,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
               className="rounded-lg"
             />
             <button
-              className="absolute top-4 right-4 text-white text-3xl"
+              className="absolute top-4 right-4 text-[#FB6535] text-3xl"
               onClick={closeModal}
             >
               ×
