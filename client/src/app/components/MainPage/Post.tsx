@@ -189,7 +189,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
                       ? `Lat: ${post.latitude}, Long: ${post.longitude}`
                       : "No location"}
                   </span>
-                  <span>{post.type === "red-flag" ? <FiFlag style={{ color: 'red', fontSize: '2em' }} /> : <FiFlag style={{ color: 'green', fontSize: '2em' }} />}</span>
+                  <span>{post.type === "red-flag" ? <FiFlag style={{ color: 'red', fontSize: '9px' }} /> : <FiFlag style={{ color: 'green', fontSize: '9px' }} />}</span>
                 </div>
               </div>
             </Link>
