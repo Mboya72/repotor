@@ -184,6 +184,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
                 </div>
               </div>
             </Link>
+            {/* Show edit button only if the logged-in user owns the post */}
             {post.user.id === user.id && !post.status ? (
               <button
                 onClick={() => setIsEditing(!isEditing)}
