@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 import { FiFlag } from "react-icons/fi";
 
 interface PostProps {
-  post: Record;  // The Post component receives a single Record object as a prop
-  type?: "status" | "comment";  // Added optional type for differentiating between status and comment
-  user: User,
+  post: Record;
+  type?: "status" | "comment";
+  user: User;
 }
 
 const Post = ({ post, type = "status", user }: PostProps) => {
@@ -20,12 +20,12 @@ const Post = ({ post, type = "status", user }: PostProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(post.description);
   const [editedMedia, setEditedMedia] = useState<File | null>(null);
-  const [editedPreviewURL, setEditedPreviewURL] = useState<string>("");
+  const [editedPreviewURL, setEditedPreviewURL] = useState<string>(post.image_url || post.video_url || "");
   const [editedLocation, setEditedLocation] = useState<{ lat: number; lng: number } | null>(
     post.latitude && post.longitude ? { lat: post.latitude, lng: post.longitude } : null
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);  // State for modal visibility
-  const [selectedImage, setSelectedImage] = useState<string | null>(null); // Selected image URL for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleInfoClick = () => {
     setShowActions(true);
@@ -134,8 +134,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
   return (
     <div className="p-4 border-y-[1px] border-borderGray">
       {/* POST TYPE */}
-      <div className="flex items-center gap-2 text-sm text-textGray mb-2 from-bold">
-      </div>
+      <div className="flex items-center gap-2 text-sm text-textGray mb-2 from-bold"></div>
 
       {/* POST CONTENT */}
       <div className={`flex gap-4 ${type === "status" ? "flex-col" : "flex-row"}`}>
@@ -184,25 +183,57 @@ const Post = ({ post, type = "status", user }: PostProps) => {
                 </div>
               </div>
             </Link>
-            {post.user.id === user.id && !post.status ? <PostInfo handleInfoClick={handleInfoClick} /> : null}
+            {post.user.id === user.id && !post.status ? (
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                className="text-sm text-primaryColor"
+              >
+                {isEditing ? "Cancel" : "Edit"}
+              </button>
+            ) : null}
           </div>
 
+          {/* Edit Post Description */}
+          {isEditing ? (
+            <textarea
+              value={editedDescription}
+              onChange={(e) => setEditedDescription(e.target.value)}
+              className="p-2 border rounded-md"
+            />
+          ) : (
+            <p>{post.description}</p>
+          )}
+
           {/* Image with modal click */}
-          {post.image_url && (
-            <div className="mt-2">
-              <Image
-                src={post.image_url}
-                alt="Post Media"
-                width={600}
-                height={600}
-                className="rounded-lg cursor-pointer"
-                onClick={() => post.image_url && openModal(post.image_url)} // Open the modal with the clicked image
-              />
-            </div>
+          {isEditing ? (
+            <input type="file" accept="image/*,video/*" onChange={handleEditedMediaChange} />
+          ) : (
+            post.image_url && (
+              <div className="mt-2">
+                <Image
+                  src={post.image_url}
+                  alt="Post Media"
+                  width={600}
+                  height={600}
+                  className="rounded-lg cursor-pointer"
+                  onClick={() => post.image_url && openModal(post.image_url)}
+                />
+              </div>
+            )
           )}
 
           {/* POST INTERACTIONS */}
-          <PostInteractions post={post} user={user}/>
+          <PostInteractions post={post} user={user} />
+
+          {/* Save Edited Post */}
+          {isEditing && (
+            <button
+              onClick={saveEdits}
+              className="mt-4 p-2 bg-blue-500 text-white rounded-lg"
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
 

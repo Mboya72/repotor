@@ -7,7 +7,7 @@ import type { Metadata } from 'next'
 import LeftBar from "@/app/components/MainPage/LeftBar";
 
 export const metadata: Metadata = {
-  title: 'Repotor Dashboard',
+  title: 'Repotor',
   description: 'Next.js I reporter application project',
 }
 
