@@ -129,7 +129,7 @@ export default function Signup() {
 
             {/* Admin Toggle */}
             <div className="flex items-center mt-4">
-              <input
+              {/* <input
                 type="checkbox"
                 id="adminToggle"
                 className="mr-2 w-4 h-4"
@@ -140,7 +140,7 @@ export default function Signup() {
               />
               <label htmlFor="adminToggle" className="text-sm">
                 Sign up as Admin
-              </label>
+              </label> */}
             </div>
 
             <button type="submit" className="w-full mt-4 bg-orange-500 py-2 rounded-full transition hover:bg-orange-600">
