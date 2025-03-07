@@ -251,9 +251,11 @@ const Post = ({ post, type = "status", user }: PostProps) => {
                     lng: editedLocation?.lng || -122.4194,
                   }}
                   onClick={(event) => {
-                    const lat = event.latLng.lat();
-                    const lng = event.latLng.lng();
-                    setEditedLocation({ lat, lng });
+                    if (event.latLng) {
+                      const lat = event.latLng.lat();
+                      const lng = event.latLng.lng();
+                      setEditedLocation({ lat, lng });
+                    }
                   }}
                 >
                   {editedLocation && <Marker position={editedLocation} />}
