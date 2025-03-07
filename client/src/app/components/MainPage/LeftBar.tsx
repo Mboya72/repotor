@@ -95,34 +95,39 @@ const LeftBar = ({ user }: { user: User }) => {
 
       {/* USER */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 relative rounded-full overflow-hidden">
-            <Image
-              src={user.profile_picture || "/icons/user.png"}
-              alt="lama dev"
-              width={40}
-              height={40}
-            />
-          </div>
-          <div className="hidden lg:flex flex-col">
-            <span className="text-sm text-textGray">{user.username}</span>
-          </div>
-        </div>
-        <div className="hidden lg:block cursor-pointer font-bold" onClick={() => {
-          if (confirm("Are you sure you'd like to logout?")) {
-            fetch(`https://repotor.onrender.com/logout`, {
-              method: "DELETE",
-              credentials: "include",
-            })
-              .then((r) => {
-                if (r.ok) {
-                  router.push('/')
-                }
-              })
-              .catch((err) => console.error(err));
-          }
-        }}><FiLogOut /></div>
-      </div>
+  <div className="flex items-center gap-2">
+    <div className="w-10 h-10 relative rounded-full overflow-hidden">
+      <Image
+        src={user.profile_picture || "/icons/user.png"}
+        alt="lama dev"
+        width={40}
+        height={40}
+      />
+    </div>
+    <div className="hidden lg:flex flex-col">
+      <span className="text-sm text-textGray">{user.username}</span>
+    </div>
+  </div>
+  <div
+    className="block lg:hidden cursor-pointer font-bold"
+    onClick={() => {
+      if (confirm("Are you sure you'd like to logout?")) {
+        fetch(`https://repotor.onrender.com/logout`, {
+          method: "DELETE",
+          credentials: "include",
+        })
+          .then((r) => {
+            if (r.ok) {
+              router.push('/');
+            }
+          })
+          .catch((err) => console.error(err));
+      }
+    }}
+  >
+    <FiLogOut />
+  </div>
+</div>
     </div>
   );
 };
