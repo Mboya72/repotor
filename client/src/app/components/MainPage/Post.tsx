@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Record, User } from "../types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FiFlag } from "react-icons/fi";
 
 interface PostProps {
   post: Record;  // The Post component receives a single Record object as a prop
@@ -188,6 +189,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
                       ? `Lat: ${post.latitude}, Long: ${post.longitude}`
                       : "No location"}
                   </span>
+                  <span>{post.type === "red-flag" ? <FiFlag style={{ color: 'red', fontSize: '2em' }} /> : <FiFlag style={{ color: 'green', fontSize: '2em' }} />}</span>
                 </div>
               </div>
             </Link>
