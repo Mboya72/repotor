@@ -9,6 +9,7 @@ import RightBar from "../components/MainPage/RightBar";
 import { Record } from "../components/types";
 import Recommendations from "../components/MainPage/Recommendations";
 import { useSearchParams } from "next/navigation"; 
+import { FiTrash } from "react-icons/fi";
 
 const UserPage = () => {
   const [coverImage, setCoverImage] = useState("/icons/user.png");
@@ -183,6 +184,23 @@ const UserPage = () => {
               <div className="flex items-center gap-2">
                 <span className="font-bold">{user?.following.length}</span>
                 <span className="text-sm">Following</span>
+              </div>
+              <div className="flex items-center gap-2" onClick={() => {
+                if (confirm("Are you sure you want to delete your account?")) {
+                  fetch(`https://repotor.onrender.com/users/${user.id}`, {
+                    method: "DELETE",
+                    credentials: "include",
+                  })
+                    .then((r) => {
+                      if (r.ok) {
+                        alert("You've successfully deleted your account!")
+                      }
+                    })
+                    .catch((err) => console.error(err));
+                }
+              }}>
+                <span><FiTrash /></span>
+                <span className="text-sm">Delete Account</span>
               </div>
             </div>
           </div>
