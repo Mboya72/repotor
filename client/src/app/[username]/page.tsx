@@ -142,7 +142,7 @@ const UserPage = () => {
             <div className="w-full relative">
               <Image
                 className="w-full h-80 object-cover"
-                src={coverImage}
+                src={user.profile_picture ? user.profile_picture : coverImage}
                 alt="Cover Image"
                 width={600}
                 height={200}
@@ -151,7 +151,7 @@ const UserPage = () => {
             {/* Avatar */}
             <div className="rounded-full overflow-hidden border-4 border-white bg-gray-300 absolute left-4 -bottom-12">
               <Image
-                src={avatarImage}
+                src={user.profile_picture ? user.profile_picture : avatarImage}
                 alt="Avatar"
                 width={100}
                 height={100}
