@@ -223,21 +223,6 @@ const Post = ({ post, type = "status", user }: PostProps) => {
             )
           )}
 
-          {/* Google Map for Location */}
-          {post.latitude && post.longitude && (
-            <div className="mt-4 w-full h-60">
-              <LoadScript googleMapsApiKey="AIzaSyDt-07h5Loqwro0Fc3aijCx1ujpAkEkwcc">
-                <GoogleMap
-                  mapContainerStyle={{ width: '100%', height: '100%' }}
-                  zoom={12}
-                  center={{ lat: post.latitude, lng: post.longitude }}
-                >
-                  <Marker position={{ lat: post.latitude, lng: post.longitude }} />
-                </GoogleMap>
-              </LoadScript>
-            </div>
-          )}
-
           {/* POST INTERACTIONS */}
           <PostInteractions post={post} user={user} />
 
@@ -245,10 +230,36 @@ const Post = ({ post, type = "status", user }: PostProps) => {
           {isEditing && (
             <button
               onClick={saveEdits}
-              className="mt-4 p-2 bg-[#FB6535] text-white rounded-full"
+              className="mt-4 p-2 bg-blue-500 text-white rounded-lg"
             >
               Save
             </button>
+          )}
+
+          {/* Location Picker (Google Map) */}
+          {isEditing && (
+            <div className="relative w-full h-80 mt-4">
+              <LoadScript googleMapsApiKey="AIzaSyDt-07h5Loqwro0Fc3aijCx1ujpAkEkwcc">
+                <GoogleMap
+                  mapContainerStyle={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  zoom={12}
+                  center={{
+                    lat: editedLocation?.lat || 37.7749, // Default to San Francisco coordinates
+                    lng: editedLocation?.lng || -122.4194,
+                  }}
+                  onClick={(event) => {
+                    const lat = event.latLng.lat();
+                    const lng = event.latLng.lng();
+                    setEditedLocation({ lat, lng });
+                  }}
+                >
+                  {editedLocation && <Marker position={editedLocation} />}
+                </GoogleMap>
+              </LoadScript>
+            </div>
           )}
         </div>
       </div>
@@ -265,7 +276,7 @@ const Post = ({ post, type = "status", user }: PostProps) => {
               className="rounded-lg"
             />
             <button
-              className="absolute top-4 right-4 text-[#FB6535] text-3xl"
+              className="absolute top-4 right-4 text-white text-3xl"
               onClick={closeModal}
             >
               ×
