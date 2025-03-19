@@ -51,7 +51,7 @@ export default function Signup() {
       console.log("Posted User data:", data);
 
       // Optionally redirect after successful signup
-      router.push('/');
+      router.push('/verification');
     } catch (err) {
       console.error("Error during signup:", err);
     }
