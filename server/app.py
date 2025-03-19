@@ -75,8 +75,7 @@ class Signup(Resource):
             if not status:
                 return make_response({"Error": "Failed to send verification email"}, 500)
             
-            session['user_id'] = user.id
-            print(session)
+            
             return make_response(user.to_dict(), 201)
         except Exception as e:
             return make_response({f"Error": "Error signing up. Check credentials.", "e": {e}}, 422)
@@ -93,7 +92,9 @@ class Verify(Resource):
                 return make_response({"Error": "Invalid token"}, 400)
             user.is_verified = True
             db.session.commit()
-            return make_response({"message": "Email verified successfully!"}, 200)
+            session['user_id'] = user.id
+            print(session)
+            return redirect("https://repotor.vercel.app")
         except Exception as e:
             print("Verification error:", e)
             return make_response({"Error": "Verification failed"}, 400)
